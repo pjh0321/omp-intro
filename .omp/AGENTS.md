@@ -1,3 +1,5 @@
+> **READ THIS ENTIRE FILE TO THE END BEFORE EDITING THIS REPO.** Agent context file: per the global authoring rule, keep it **English prose + tables only** — Korean only for functional literals (e.g. commit-label stems). Re-audit the whole file for non-English drift on every edit.
+
 # omp-intro
 
 Korean slide deck introducing the **omp (Oh-My-Pi)** terminal coding agent to a **developer** audience. Single standalone HTML (`index.html`). Theme: 3-way harness comparison — omp │ Claude Code + OMC │ Codex + OMX ("same model, different harness → different tokens / accuracy"). Intended for later URL sharing (static hosting).
@@ -15,6 +17,7 @@ Korean slide deck introducing the **omp (Oh-My-Pi)** terminal coding agent to a 
 - `index.html` is a single file; prefer in-place string edits. Keep `<head>` / `<style>` / nav verbatim unless the task changes them.
 - Page numbers are hardcoded and load-bearing (header/footer `.pg`, `data-i`, `titles[]`, nav jump-indices, TOC `data-goto`). Re-verify slide count and numbering after any add / remove / reorder.
 - Tone: developer-level Korean "~다". Source every factual claim (file / section / URL); no overclaims.
+- Layout / overflow check: render at **1920×1080** (the deck's design size; 1280×720 is too cramped). A slide already passing at a smaller viewport needs no re-check.
 
 ## Commit & push convention
 
