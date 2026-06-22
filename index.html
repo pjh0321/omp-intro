@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>omp 소개 — 사내 공유</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-dark: #0c0c0c;
+  --bg-soft: #f9f8fc;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #888;
+  --purple: #7c6dff;
+  --purple-deep: #5e4eda;
+  --purple-soft: #c5bff0;
+  --purple-pale: #ede9f8;
+  --line: #e8e8e8;
+  --line-soft: #f0f0f0;
+  --radius: 14px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* === Slide container === */
+.slide, .cover, .section-slide {
+  min-height: 100vh;
+  width: 100%;
+  padding: 56px 72px 64px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.cover, .section-slide { justify-content: space-between; }
+
+.cover > :not(.s-header):not(.cover-deco),
+.section-slide > :not(.s-header),
+.content {
+  width: min(100%, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* === Header & Footer === */
+.s-header {
+  position: absolute;
+  top: 28px;
+  left: 72px;
+  right: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+
+.s-header .pg { color: var(--purple-deep); font-weight: 600; }
+
+.s-footer {
+  position: absolute;
+  bottom: 28px;
+  left: 72px;
+  right: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+
+/* === Section label === */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--purple-deep);
+  margin-bottom: 18px;
+}
+
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--purple-deep);
+}
+
+/* === Typography === */
+h1.cover-title {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 800;
+  font-size: 56px;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  max-width: 980px;
+}
+
+h1.cover-title .accent { color: var(--purple-deep); }
+
+h2.s-title {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: var(--ink);
+  max-width: 1000px;
+  text-wrap: balance;
+}
+
+h2.s-title .accent { color: var(--purple-deep); }
+
+h3 {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.body-text {
+  font-size: 16px;
+  line-height: 1.72;
+  color: #3f3f49;
+  max-width: 800px;
+  margin-bottom: 14px;
+  font-weight: 400;
+  text-wrap: pretty;
+}
+
+.body-text strong { color: var(--ink); font-weight: 700; }
+
+.body-text code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  background: var(--purple-pale);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--purple-deep);
+}
+
+/* === Content area === */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 0;
+}
+
+.content.top { justify-content: flex-start; padding-top: 52px; }
+
+/* === Card === */
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  position: relative;
+}
+
+.card.purple {
+  background: var(--purple-pale);
+  border: 1px solid var(--purple-soft);
+}
+
+.card .card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--purple-deep);
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.card .card-title {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.38;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.card .card-body {
+  font-size: 14px;
+  line-height: 1.68;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.card .card-body strong { color: var(--ink); font-weight: 600; }
+.card .card-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  background: rgba(94, 78, 218, 0.08);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--purple-deep);
+}
+
+/* === Grid === */
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 14px;
+}
+
+/* === Callout === */
+.callout {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: 22px 26px;
+  border-radius: var(--radius);
+  margin: 18px 0 0;
+  max-width: 980px;
+}
+
+.callout .callout-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--purple-soft);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.callout .callout-body {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+}
+
+.callout .callout-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  background: rgba(255,255,255,0.12);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--purple-soft);
+}
+
+/* === Prompt box (코딩 AI 예시 프롬프트) === */
+.prompt-box {
+  margin-top: 20px;
+  background: var(--bg-dark);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  max-width: 1040px;
+  position: relative;
+  overflow: hidden;
+}
+
+.prompt-box::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--purple);
+}
+
+.prompt-box .prompt-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--purple-soft);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prompt-box .prompt-label .label-tag {
+  font-size: 9px;
+  color: rgba(197, 191, 240, 0.5);
+  letter-spacing: 0.15em;
+}
+
+.prompt-box pre.prompt-body {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.78;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: pre-wrap;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.prompt-box pre.prompt-body .var {
+  color: var(--purple-soft);
+  font-weight: 500;
+}
+
+/* === Changelog === */
+.changelog {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.changelog-item {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  padding: 5px 0;
+}
+
+.changelog-item .ci-num {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--purple-deep);
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 28px;
+  letter-spacing: 0.05em;
+}
+
+.changelog-item .ci-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.changelog-item .ci-body strong { color: var(--ink); font-weight: 600; }
+
+.changelog-item .ci-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  background: var(--purple-pale);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: var(--purple-deep);
+}
+
+/* === Cover === */
+.cover-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+
+.cover-sub {
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-top: 28px;
+  font-weight: 400;
+  max-width: 760px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.cover-sub strong { color: var(--ink); font-weight: 600; }
+
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-mute);
+  letter-spacing: 0.1em;
+}
+
+.cover-deco {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 160px;
+  font-weight: 500;
+  color: var(--purple-pale);
+  position: absolute;
+  right: 64px;
+  bottom: 120px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  z-index: 0;
+}
+
+/* === Section slide === */
+.section-slide .big-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 160px;
+  font-weight: 500;
+  color: var(--purple-pale);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.section-slide .section-title {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+  max-width: 1000px;
+}
+
+.section-slide .section-sub {
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin-top: 18px;
+  max-width: 700px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+/* === Compare === */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 28px 1fr;
+  gap: 14px;
+  margin-top: 22px;
+  align-items: stretch;
+}
+
+.compare-col {
+  padding: 22px 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.compare-col.after {
+  background: var(--purple-pale);
+  border-color: var(--purple-soft);
+}
+
+.compare-col .compare-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--purple-deep);
+  letter-spacing: 0.2em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.compare-col h4 {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.38;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 8px;
+  text-wrap: balance;
+}
+
+.compare-col p {
+  font-size: 14px;
+  line-height: 1.68;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.compare-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--purple-deep);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* === Lesson box === */
+.lesson-box {
+  margin-top: 22px;
+  padding: 22px 26px;
+  border-left: 3px solid var(--purple-deep);
+  background: var(--bg-soft);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.lesson-box .lesson-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--purple-deep);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.lesson-box .lesson-body {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.lesson-box .lesson-body strong {
+  color: var(--purple-deep);
+  font-weight: 700;
+}
+
+/* === Method card (배포 방법 비교) === */
+.method-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.method-card.recommended {
+  background: var(--purple-pale);
+  border-color: var(--purple-soft);
+}
+
+.method-card .method-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--purple-deep);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.method-card .method-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+
+.method-card .method-use {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.method-card .method-use strong { color: var(--ink); font-weight: 600; }
+
+.method-card .method-use code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  background: rgba(94, 78, 218, 0.08);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--purple-deep);
+}
+
+/* === Dark slide === */
+.slide.dark {
+  background: var(--bg-dark);
+  color: #fff;
+  border-bottom: none;
+}
+
+.slide.dark .s-header { color: rgba(255,255,255,0.5); }
+.slide.dark .s-header .pg { color: var(--purple-soft); }
+.slide.dark .s-footer { color: rgba(255,255,255,0.4); }
+.slide.dark .section-label { color: var(--purple-soft); }
+.slide.dark .section-label::before { background: var(--purple-soft); }
+.slide.dark h2.s-title { color: #fff; }
+.slide.dark .body-text { color: rgba(255,255,255,0.78); }
+.slide.dark .body-text strong { color: #fff; }
+
+/* === Hero quote === */
+.hero-quote {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+  color: #fff;
+  max-width: 980px;
+  margin: 28px 0 24px;
+  padding-left: 28px;
+  border-left: 3px solid var(--purple-soft);
+  text-wrap: balance;
+}
+
+.hero-quote em {
+  font-style: normal;
+  color: var(--purple-soft);
+  font-weight: 600;
+}
+
+.hero-attribution {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--purple-soft);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  padding-left: 31px;
+}
+
+.closing-thanks {
+  margin-top: 48px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--purple-soft);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* === Screenshots === */
+.screenshot {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  background: #fff;
+}
+
+.screenshot-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 18px;
+  align-items: start;
+}
+
+.screenshot-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.screenshot-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.screenshot-single {
+  max-width: 720px;
+  margin-top: 16px;
+}
+
+/* === Emphasis box (강조 처리용) === */
+.emphasis {
+  background: linear-gradient(90deg, var(--purple-pale) 0%, rgba(237, 233, 248, 0.4) 100%);
+  border-left: 3px solid var(--purple-deep);
+  padding: 14px 18px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 14px 0;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.emphasis strong {
+  color: var(--purple-deep);
+  font-weight: 700;
+}
+
+/* === Closing pages === */
+.closing-big {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 800;
+  font-size: 130px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-align: center;
+}
+
+.closing-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
+/* === Nav toast === */
+.nav-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(12, 12, 12, 0.92);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  padding: 10px 20px;
+  border-radius: 24px;
+  letter-spacing: 0.05em;
+  z-index: 200;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  backdrop-filter: blur(6px);
+}
+
+.nav-toast.hidden { opacity: 0; pointer-events: none; }
+
+/* === Smaller screen tweaks === */
+@media (max-height: 800px) {
+  .slide, .cover, .section-slide { padding: 42px 60px 50px; }
+  .s-header { top: 20px; left: 60px; right: 60px; }
+  .s-footer { bottom: 20px; left: 60px; right: 60px; }
+  h1.cover-title { font-size: 46px; }
+  h2.s-title { font-size: 32px; margin-bottom: 12px; }
+  .section-slide .section-title { font-size: 42px; }
+  .section-slide .big-num { font-size: 130px; }
+  .cover-deco { font-size: 130px; right: 50px; bottom: 90px; }
+  .body-text { font-size: 15px; margin-bottom: 12px; }
+  .content { padding: 24px 0; }
+  .content.top { padding-top: 40px; }
+  .card { padding: 18px 22px; }
+  .card .card-title { font-size: 16px; }
+  .card .card-body { font-size: 13.5px; }
+  .callout { padding: 18px 22px; }
+  .callout .callout-body { font-size: 15px; }
+  .hero-quote { font-size: 26px; }
+  .prompt-box { padding: 18px 22px; margin-top: 16px; }
+  .prompt-box pre.prompt-body { font-size: 12px; line-height: 1.7; }
+  .changelog-item { padding: 4px 0; }
+  .changelog-item .ci-body { font-size: 14px; }
+  .closing-big { font-size: 100px; }
+  .closing-wrap { gap: 28px; }
+  .screenshot-row { gap: 12px; margin-top: 14px; }
+  .emphasis { font-size: 14.5px; padding: 12px 16px; }
+}
+
+/* === Progress bar (상단 전체 진행률 — 신규 추가) === */
+.progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--line-soft);
+  z-index: 150;
+}
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--purple-deep);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* ===== v2 additions — 3-way comparison rebuild (omp / Claude Code+OMC / Codex+OMX) ===== */
+
+/* Caveat footnote */
+.footnote { margin-top: 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.6; color: var(--ink-mute); max-width: 1180px; }
+.footnote .fn-mark { color: var(--purple-deep); font-weight: 600; }
+.footnote code { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; background: var(--purple-pale); padding: 1px 5px; border-radius: 4px; color: var(--purple-deep); }
+.slide.dark .footnote { color: rgba(255,255,255,0.52); }
+.slide.dark .footnote .fn-mark { color: var(--purple-soft); }
+.slide.dark .footnote code { background: rgba(255,255,255,0.1); color: var(--purple-soft); }
+
+/* Count badges (S11) */
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 14px; }
+.badge { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); letter-spacing: 0.02em; }
+.badge strong { color: var(--ink); font-weight: 700; }
+.badge.omp { background: var(--purple-pale); border-color: var(--purple-soft); color: var(--purple-deep); }
+.badge.omp strong { color: var(--purple-deep); }
+
+/* Dark-slide card / emphasis adaptation (S3, S10) */
+.slide.dark .card { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.12); }
+.slide.dark .card .card-num { color: var(--purple-soft); }
+.slide.dark .card .card-title { color: #fff; }
+.slide.dark .card .card-body { color: rgba(255,255,255,0.75); }
+.slide.dark .card .card-body strong { color: #fff; }
+.slide.dark .card .card-body code { background: rgba(255,255,255,0.1); color: var(--purple-soft); }
+.slide.dark .card.hi { background: rgba(124,109,255,0.16); border-color: var(--purple); }
+.slide.dark .emphasis { background: rgba(124,109,255,0.13); border-left-color: var(--purple-soft); color: rgba(255,255,255,0.92); }
+.slide.dark .emphasis strong { color: var(--purple-soft); }
+.slide.dark .emphasis code { background: rgba(255,255,255,0.12); color: var(--purple-soft); }
+
+/* Wide 3-way comparison tables (S11 / S12) */
+.slide.wide .content { width: min(100%, 1640px); }
+.cmp-wrap { width: 100%; overflow-x: auto; margin-top: 4px; }
+.cmp { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.cmp col.col-rh { width: 13%; }
+.cmp col.col-d3 { width: 29%; }
+.cmp col.col-agrh { width: 14%; }
+.cmp col.col-agomp { width: 15%; }
+.cmp col.col-agcmp { width: 31%; }
+.cmp col.col-agcmpx { width: 40%; }
+.cmp th, .cmp td { text-align: left; vertical-align: top; padding: 7px 11px; border-bottom: 1px solid var(--line); }
+.cmp thead th { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-mute); border-bottom: 2px solid var(--ink); padding-bottom: 9px; }
+.cmp thead th.c-omp { color: var(--purple-deep); }
+.cmp thead th .th-sub { display: block; font-weight: 400; font-size: 9px; color: var(--ink-mute); letter-spacing: 0.03em; text-transform: none; margin-top: 3px; }
+.cmp thead th.c-omp .th-sub { color: var(--purple-soft); }
+.cmp td { font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5; color: var(--ink-soft); }
+.cmp td.rh { font-family: 'Pretendard', sans-serif; font-weight: 700; font-size: 12px; color: var(--ink); letter-spacing: -0.01em; }
+.cmp td.c-omp { background: var(--purple-pale); color: var(--purple-deep); font-weight: 500; }
+.cmp td .c-x { color: #cfcfd6; }
+.cmp td .c-ind { font-style: italic; opacity: 0.72; }
+.cmp td .seg { display: block; }
+.cmp td .seg + .seg { margin-top: 5px; }
+.cmp .seg-l { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; color: var(--ink-mute); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; margin-right: 6px; }
+.cmp .seg-l.ext { color: var(--purple-deep); background: var(--purple-pale); border-color: var(--purple-soft); }
+.cmp tr.em-row td { border-top: 2px solid var(--ink); border-bottom: none; font-weight: 700; color: var(--ink); padding-top: 10px; }
+.cmp tr.em-row td.c-omp { color: var(--purple-deep); }
+@media (max-height: 800px) {
+  .cmp thead th, .cmp td { padding: 5px 9px; font-size: 10px; }
+  .cmp td.rh { font-size: 11px; }
+}
+
+
+/* ===== v4 additions — 21-slide rework (per-capability slash, 3-line hover, copy, sources) ===== */
+
+/* hero statement (S3) */
+.hero-line { font-family:'Pretendard',sans-serif; font-weight:800; font-size:30px; line-height:1.32; letter-spacing:-0.025em; color:#fff; max-width:1020px; margin:6px 0 14px; text-wrap:balance; }
+.hero-line .accent { color:var(--purple-soft); }
+
+/* S3 evidence blocks */
+.evidence { margin-top:16px; display:flex; flex-direction:column; gap:12px; }
+.ev { display:grid; grid-template-columns:30px 1fr; gap:13px; align-items:start; padding-left:15px; border-left:3px solid var(--purple-deep); }
+.ev .ev-n { font-family:'JetBrains Mono',monospace; font-weight:700; font-size:16px; color:var(--purple-deep); line-height:1.55; }
+.ev .ev-b { font-size:14.5px; line-height:1.6; color:var(--ink); }
+.ev .ev-b strong { color:var(--purple-deep); font-weight:700; }
+.ev .ev-note { display:block; margin-top:3px; font-size:12.5px; color:var(--ink-mute); font-weight:400; }
+.slide.dark .ev { border-left-color:var(--purple-soft); }
+.slide.dark .ev .ev-n { color:var(--purple-soft); }
+.slide.dark .ev .ev-b { color:rgba(255,255,255,0.86); }
+.slide.dark .ev .ev-b strong { color:#fff; }
+.slide.dark .ev .ev-note { color:rgba(255,255,255,0.6); }
+
+/* per-slide source line */
+.source-line { margin-top:16px; padding-top:9px; border-top:1px solid var(--line-soft); font-family:'JetBrains Mono',monospace; font-size:10.5px; line-height:1.55; color:var(--ink-mute); letter-spacing:0.01em; max-width:1320px; }
+.source-line .src-k { color:var(--purple-deep); font-weight:600; }
+.source-line a { color:var(--ink-soft); text-decoration:none; }
+.source-line a:hover { color:var(--purple-deep); text-decoration:underline; }
+.source-line code { font-family:'JetBrains Mono',monospace; background:var(--purple-pale); padding:0 4px; border-radius:3px; color:var(--purple-deep); font-size:10px; }
+.slide.dark .source-line { color:rgba(255,255,255,0.5); border-top-color:rgba(255,255,255,0.14); }
+.slide.dark .source-line .src-k { color:var(--purple-soft); }
+.slide.dark .source-line a { color:rgba(255,255,255,0.6); }
+.slide.dark .source-line code { background:rgba(255,255,255,0.1); color:var(--purple-soft); }
+
+/* TOC (S2) */
+.toc-big { font-family:'Pretendard',sans-serif; font-weight:800; font-size:66px; line-height:1; letter-spacing:-0.035em; color:var(--ink); margin:8px 0 24px; }
+.toc-big .accent { color:var(--purple-deep); }
+.toc-grid { display:grid; grid-template-columns:1.1fr 1fr 1fr; gap:16px 30px; }
+.toc-col h4 { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--purple-deep); margin-bottom:6px; padding-bottom:7px; border-bottom:1px solid var(--line); }
+.toc-item { display:flex; gap:12px; align-items:baseline; padding:6px 10px; border-radius:8px; cursor:pointer; transition:background 0.14s ease; }
+.toc-item:hover { background:var(--purple-pale); }
+.toc-item .toc-n { font-family:'JetBrains Mono',monospace; color:var(--purple-deep); font-size:12px; font-weight:600; min-width:22px; }
+.toc-item .toc-t { font-size:14.5px; color:var(--ink); letter-spacing:-0.01em; }
+.toc-item:hover .toc-t { color:var(--purple-deep); }
+
+/* sources (S20/S21) */
+.src-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 26px; margin-top:10px; }
+.src-row { padding:8px 0; border-bottom:1px solid var(--line-soft); }
+.src-row .sc-claim { font-size:13px; font-weight:700; color:var(--ink); line-height:1.4; letter-spacing:-0.01em; }
+.src-row .sc-n { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10px; color:#fff; background:var(--purple-deep); border-radius:4px; padding:0 5px; margin-right:7px; vertical-align:1px; }
+.src-row .sc-loc { font-family:'JetBrains Mono',monospace; font-size:10.5px; line-height:1.5; color:var(--ink-soft); margin-top:3px; word-break:break-all; }
+.src-row .sc-loc a { color:var(--purple-deep); text-decoration:none; }
+.src-row .sc-loc a:hover { text-decoration:underline; }
+.src-row .sc-loc code { font-family:'JetBrains Mono',monospace; font-size:10px; background:var(--purple-pale); padding:0 4px; border-radius:3px; color:var(--purple-deep); }
+.src-row .sc-tag { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--ink-mute); margin-top:2px; }
+.src-honesty { margin-top:6px; padding:12px 16px; background:var(--bg-soft); border-left:3px solid var(--purple-deep); border-radius:0 var(--radius-sm) var(--radius-sm) 0; font-size:13px; line-height:1.6; color:var(--ink); }
+.src-honesty strong { color:var(--purple-deep); }
+
+/* hover slide menu */
+#slide-menu { position:fixed; top:46px; right:22px; z-index:300; width:316px; max-height:84vh; overflow-y:auto; background:rgba(12,12,12,0.97); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:6px; box-shadow:0 14px 44px rgba(0,0,0,0.35); font-family:'Pretendard',sans-serif; opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity 0.18s ease, transform 0.18s ease; }
+#slide-menu.open { opacity:1; transform:none; pointer-events:auto; }
+#slide-menu .sm-cat { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); padding:9px 11px 4px; }
+#slide-menu .sm-item { display:flex; gap:10px; align-items:baseline; padding:5px 11px; border-radius:7px; cursor:pointer; color:rgba(255,255,255,0.82); font-size:12.5px; letter-spacing:-0.01em; }
+#slide-menu .sm-item:hover { background:rgba(124,109,255,0.28); color:#fff; }
+#slide-menu .sm-n { font-family:'JetBrains Mono',monospace; color:var(--purple-soft); font-size:10px; min-width:20px; }
+#slide-menu .sm-item.cur { background:rgba(124,109,255,0.18); }
+#slide-menu .sm-item.cur .sm-t { color:var(--purple-soft); font-weight:700; }
+
+/* top-right 3-line nav indicator */
+.navind { display:flex; flex-direction:column; align-items:flex-end; text-align:right; line-height:1.22; cursor:pointer; font-family:'Pretendard',sans-serif; text-transform:none; letter-spacing:-0.01em; max-width:340px; }
+.navind .ni-prev, .navind .ni-next { font-size:9.5px; font-weight:400; color:var(--ink-mute); opacity:0.6; }
+.navind .ni-cur { font-size:11.5px; font-weight:700; color:var(--purple-deep); }
+.navind:hover .ni-cur { text-decoration:underline; }
+.slide.dark .navind .ni-cur { color:var(--purple-soft); }
+.slide.dark .navind .ni-prev, .slide.dark .navind .ni-next { color:rgba(255,255,255,0.55); }
+
+/* fixed odometer-roll nav (replaces per-section .navind) */
+.s-header .navind { display:none; }
+#navroll { position:fixed; top:24px; right:72px; width:440px; height:60px; z-index:250; pointer-events:auto; font-family:'Pretendard',sans-serif; letter-spacing:-0.01em; }
+.nr-line { position:absolute; right:0; top:50%; white-space:nowrap; text-align:right; line-height:1.15; cursor:pointer; transform: translateY(calc(-50% + var(--o,0) * 20px)); transition: transform .5s cubic-bezier(.22,.61,.36,1), font-size .5s cubic-bezier(.22,.61,.36,1), opacity .45s ease, color .4s ease; }
+.nr-line.o0 { font-size:18px; font-weight:800; color:var(--purple-deep); opacity:1; }
+.nr-line.o1 { font-size:11px; font-weight:400; color:var(--ink-mute); opacity:0.5; }
+.nr-line.o2 { font-size:6px; font-weight:400; color:var(--ink-mute); opacity:0; }
+#navroll:hover .nr-line.o0 { text-decoration:underline; }
+#navroll.on-dark .nr-line.o0 { color:var(--purple-soft); }
+#navroll.on-dark .nr-line.o1, #navroll.on-dark .nr-line.o2 { color:rgba(255,255,255,0.5); }
+@media (max-height:800px){ #navroll { top:18px; right:60px; } }
+@media (prefers-reduced-motion: reduce){ .nr-line { transition:none; } }
+
+/* copy button (S17) */
+.copy-btn { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--purple-soft); background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:3px 11px; cursor:pointer; transition:all 0.15s ease; }
+.copy-btn:hover { background:rgba(124,109,255,0.28); color:#fff; }
+.copy-btn.copied { background:var(--purple-deep); color:#fff; border-color:var(--purple-deep); }
+
+/* S4 comparison columns */
+.cmp col.col-rh4 { width:19%; }
+.cmp col.col-omp4 { width:33%; }
+.cmp col.col-ccx4 { width:48%; }
+
+/* slash per-capability table (S10-S13) */
+.cmp col.col-rh4s { width:21%; }
+.cmp col.col-omps { width:20%; }
+.cmp col.col-d3s { width:29.5%; }
+.cmp.slash td { font-size:10.5px; padding:6px 9px; }
+.cmp.slash td.rh { font-size:11.5px; }
+.cmp tr.grp td { background:var(--bg-soft); font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--purple-deep); padding:8px 11px; border-bottom:1px solid var(--line); }
+
+/* shortcuts table (S19) */
+.cmp col.col-kact { width:42%; }
+.cmp col.col-kkey { width:28%; }
+.cmp col.col-kid { width:30%; }
+.cmp.keys td.k-key { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--purple-deep); font-size:12px; }
+.cmp.keys td.k-id { font-family:'JetBrains Mono',monospace; color:var(--ink-mute); font-size:10.5px; }
+
+
+/* ===== v5 additions — 23-slide (bigger nav, S4 A/B, honest S8, S10 gaps, provider table) ===== */
+
+/* bigger 3-line nav: current clearly larger than neighbors */
+.navind { line-height:1.3; max-width:400px; gap:1px; }
+.navind .ni-prev, .navind .ni-next { font-size:11px; font-weight:400; opacity:0.5; }
+.navind .ni-cur { font-size:18px; font-weight:800; }
+
+/* slide transitions: body fade-up + nav slide-in (separate axis) */
+@keyframes slFadeUp { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slNavIn { from { transform:translateX(-22px); } to { transform:translateX(0); } }
+section.sl-anim > *:not(.s-header):not(.s-footer) { animation: slFadeUp .44s cubic-bezier(.21,.6,.35,1) both; }
+section.sl-anim .navind { animation: slNavIn .5s cubic-bezier(.22,.61,.36,1) .04s both; }
+section.sl-leaving > *:not(.s-header):not(.s-footer) { transition: opacity .15s ease, transform .15s ease; opacity:0; transform:translateY(-9px); }
+@media (prefers-reduced-motion: reduce) {
+  section.sl-anim > *:not(.s-header):not(.s-footer), section.sl-anim .navind { animation: none; }
+  section.sl-leaving > *:not(.s-header):not(.s-footer), section.sl-leaving .navind { transition: none; opacity: 1; transform: none; }
+}
+.slide.dark .navind .ni-prev, .slide.dark .navind .ni-next { color:rgba(255,255,255,0.5); }
+
+/* S4 A/B sub-section labels */
+.ab-label { font-family:'Pretendard',sans-serif; font-weight:700; font-size:15px; letter-spacing:-0.01em; margin:16px 0 8px; display:flex; align-items:baseline; gap:9px; }
+.ab-label .ab-tag { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:0.08em; padding:2px 8px; border-radius:5px; }
+.ab-label.a { color:var(--purple-deep); }
+.ab-label.a .ab-tag { background:var(--purple-deep); color:#fff; }
+.ab-label.b { color:var(--ink-soft); }
+.ab-label.b .ab-tag { background:var(--bg-soft); color:var(--ink-soft); border:1px solid var(--line); }
+
+/* tighter slash tables so each 5-page fits the viewport */
+.cmp.slash td { font-size:10px; padding:4px 8px; line-height:1.4; }
+.cmp.slash td.rh { font-size:11px; }
+.cmp.slash tr.grp td { padding:5px 8px; font-size:9.5px; }
+.cmp.slash .seg + .seg { margin-top:3px; }
+.cmp.slash .seg-l { font-size:8.5px; padding:0 4px; margin-right:5px; }
+
+/* provider comparison table (S21) */
+.cmp.prov col.col-pv { width:14%; }
+.cmp.prov col.col-pk { width:27%; }
+.cmp.prov col.col-ps { width:16%; }
+.cmp.prov col.col-pn { width:43%; }
+.cmp.prov td { font-size:11px; }
+.cmp tr.rec td { background:var(--purple-pale); }
+.cmp tr.rec td.rh { color:var(--purple-deep); font-weight:800; }
+
+</style>
+</head>
+
+<body>
+
+<div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
+
+<section class="cover" id="s1">
+<div class="s-header"><span class="pg">1 / 28</span><span class="navind" data-i="0"></span></div>
+  <div style="margin-top: 88px; position: relative; z-index: 1;">
+    <div class="cover-meta">OMP (OH-MY-PI) · 터미널 코딩 에이전트</div>
+    <h1 class="cover-title" style="margin-top: 22px;">Claude Code · Codex를 쓰던 우리가<br><span class="accent">omp로 옮겨타야 할 이유.</span></h1>
+    <p class="cover-sub">omp = Claude Code · Codex 부류의 터미널 코딩 에이전트. 기존 <span class="mono" style="font-size:15px; color:var(--purple-deep);">~/.claude</span> · <span class="mono" style="font-size:15px; color:var(--purple-deep);">~/.codex</span> 환경을 그대로 흡수한다.</p>
+  </div>
+  <div class="cover-deco">omp</div>
+  <div class="cover-footer"><span>터미널 코딩 에이전트 · 멀티프로바이더(40+)</span><span>omp v16.1.9 기준</span></div>
+</section>
+
+<section class="slide" id="s2">
+<div class="s-header"><span class="pg">2 / 28</span><span class="navind" data-i="1"></span></div>
+  <div class="content top">
+    <div class="toc-big"><span class="accent">목차</span></div>
+    <div class="toc-grid">
+      <div class="toc-col"><h4>본문 · 왜 omp인가</h4><div class="toc-item" data-goto="2"><span class="toc-n">03</span><span class="toc-t">시작하기</span></div><div class="toc-item" data-goto="3"><span class="toc-n">04</span><span class="toc-t">외부 설정 흡수 (참고)</span></div><div class="toc-item" data-goto="4"><span class="toc-n">05</span><span class="toc-t">omp가 안 가진 것</span></div><div class="toc-item" data-goto="5"><span class="toc-n">06</span><span class="toc-t">하네스 & 오버헤드</span></div><div class="toc-item" data-goto="6"><span class="toc-n">07</span><span class="toc-t">OMP는 무엇이 다른가</span></div><div class="toc-item" data-goto="7"><span class="toc-n">08</span><span class="toc-t">상세① Hashline</span></div><div class="toc-item" data-goto="8"><span class="toc-n">09</span><span class="toc-t">상세② 도구 하네스</span></div><div class="toc-item" data-goto="9"><span class="toc-n">10</span><span class="toc-t">상세③ IDE·디버거</span></div><div class="toc-item" data-goto="10"><span class="toc-n">11</span><span class="toc-t">상세④ 컨텍스트 관리</span></div><div class="toc-item" data-goto="11"><span class="toc-n">12</span><span class="toc-t">상세⑤ 멀티프로바이더</span></div><div class="toc-item" data-goto="12"><span class="toc-n">13</span><span class="toc-t">단축키 모음</span></div></div>
+      <div class="toc-col"><h4>비교 · 1:1</h4><div class="toc-item" data-goto="13"><span class="toc-n">14</span><span class="toc-t">슬래시① 세션·브랜치</span></div><div class="toc-item" data-goto="14"><span class="toc-n">15</span><span class="toc-t">슬래시② 컨텍스트·모델</span></div><div class="toc-item" data-goto="15"><span class="toc-n">16</span><span class="toc-t">슬래시③ 계획·리뷰</span></div><div class="toc-item" data-goto="16"><span class="toc-n">17</span><span class="toc-t">슬래시④ 멀티모델·메모리·플러그인</span></div><div class="toc-item" data-goto="17"><span class="toc-n">18</span><span class="toc-t">슬래시⑤ 진단·설정</span></div><div class="toc-item" data-goto="18"><span class="toc-n">19</span><span class="toc-t">에이전트① 빌드·구현·리뷰</span></div><div class="toc-item" data-goto="19"><span class="toc-n">20</span><span class="toc-t">에이전트② 도메인·제품·조정</span></div></div>
+      <div class="toc-col"><h4>추천 설정 · 출처</h4><div class="toc-item" data-goto="20"><span class="toc-n">21</span><span class="toc-t">추천 설정</span></div><div class="toc-item" data-goto="21"><span class="toc-n">22</span><span class="toc-t">추천 설정① 사용량 한도 표시</span></div><div class="toc-item" data-goto="22"><span class="toc-n">23</span><span class="toc-t">추천 설정② 검색 Provider</span></div><div class="toc-item" data-goto="23"><span class="toc-n">24</span><span class="toc-t">추천 설정③ Advisor</span></div><div class="toc-item" data-goto="24"><span class="toc-n">25</span><span class="toc-t">추천 설정④ Gemini API 키</span></div><div class="toc-item" data-goto="25"><span class="toc-n">26</span><span class="toc-t">출처</span></div><div class="toc-item" data-goto="26"><span class="toc-n">27</span><span class="toc-t">출처①</span></div><div class="toc-item" data-goto="27"><span class="toc-n">28</span><span class="toc-t">출처②</span></div></div>
+    </div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>2 / 28</span></div></section>
+
+<section class="slide" id="sStart">
+<div class="s-header"><span class="pg">3 / 28</span><span class="navind" data-i="2"></span></div>
+  <div class="content top">
+    <div class="section-label">시작하기 · 기존 환경 그대로</div>
+    <h2 class="s-title">시작하기 — <span class="accent">기존 환경 흡수</span></h2>
+    <div class="grid-2" style="gap:28px; margin-top:6px;">
+      <div>
+        <div class="card"><div class="card-num">설치 & 첫 실행 (3단계)</div><div class="card-body">① 설치: <code>curl -fsSL https://omp.sh/install | sh</code> (macOS·Linux·WSL) — 또는 <code>bun install -g @oh-my-pi/pi-coding-agent</code> <span style="opacity:0.7;">(bun ≥ 1.3.14 · brew·Windows도 지원)</span><br>② 로그인: <code>omp</code> → <code>/login</code>으로 <strong>기존 Claude/ChatGPT 등 구독 OAuth 그대로</strong> — 별도 API 키 불필요<br>③ 사용: 프로젝트에서 <code>omp</code> → 기존 <code>CLAUDE.md</code>·<code>AGENTS.md</code> 자동 인식. 끝.</div></div>
+      </div>
+      <div>
+        <div class="card purple"><div class="card-num">상호운용 — “갈아타기 비용 낮음”</div><div class="card-body">읽어 합치는 것: <code>~/.claude</code>·<code>~/.codex</code>·<code>~/.gemini</code>의 <strong>설정·지침 파일(CLAUDE.md 등)·슬래시 명령·훅·스킬</strong>.<br>우선순위(충돌 시): native(.omp) <strong>100</strong> › claude <strong>80</strong> › codex <strong>70</strong> › gemini <strong>60</strong>.<br><strong>비파괴(read-only)</strong> — 읽어 합칠 뿐 수정 안 함 → Claude Code·Codex 계속 병행해도 안전.</div></div>
+      </div>
+    </div>
+    <div class="emphasis" style="margin-top:16px;">기존 워크플로를 <strong>버리지 않고 그대로 흡수</strong> → 시도 비용이 거의 0이고 되돌리기 쉽다.</div>
+    <div class="source-line"><span class="src-k">출처</span> omp.sh/install(README) · omp 스킬 omp-pitch §5 · 내장문서 config-usage(우선순위 native 100›claude 80›codex 70›gemini 60).</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>3 / 28</span></div></section>
+
+<section class="slide" id="sAbsorb">
+<div class="s-header"><span class="pg">4 / 28</span><span class="navind" data-i="3"></span></div>
+  <div class="content top">
+    <div class="section-label">참고 · 외부 설정 흡수 제어</div>
+    <h2 class="s-title">외부 설정 <span class="accent">흡수 끄기</span></h2>
+    <p class="body-text" style="margin-bottom:10px;">omp는 <code>~/.claude</code>·<code>~/.codex</code>의 슬래시·스킬·훅을 읽어 합친다 — 갈아타기 비용을 낮추는 핵심이다. 다만 <strong>흡수된 스킬 이름·설명이 시스템 프롬프트에 상시 로드, 슬래시 메뉴 비대 등이 신경 쓰여 흡수를 원치 않으면</strong>, omp 안에서 끌 수 있다 — OS 분리·삭제 불필요. 이게 가장 가벼운 해법이다. 단 이 부담은 흡수량에 비례한다 — 적게 깔렸으면 체감은 미미하다.</p>
+    <div class="grid-2" style="gap:28px;">
+      <div>
+        <div class="card"><div class="card-num">~/.omp/agent/config.yml</div>
+<pre class="mono" style="font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; word-break:keep-all; margin-top:4px;">commands:
+  enableClaudeUser: false
+  enableClaudeProject: false
+skills:
+  enableClaudeUser: false
+  enableCodexUser: false
+  enableClaudeProject: false</pre>
+        </div>
+      </div>
+      <div>
+        <div class="card"><div class="card-num">흡수원별 토글</div><div class="card-body">위 <code>enable*</code>를 각각 false로 — 네이티브 스킬은 <code>enablePi*</code>로 유지. <strong>흡수만 골라 끄는 단일 스위치는 없다.</strong> 스킬 전체는 <code>skills.enabled=false</code>·CLI <code>--no-skills</code>로 한 번에(단 네이티브까지 꺼짐). <code>codex</code> 슬래시는 전용 토글이 없어 <code>~/.codex/commands</code>를 비워야 막힌다. <code>/settings</code>에서도 조정.</div></div>
+        <div class="card" style="margin-top:14px;"><div class="card-num">일부만</div><div class="card-body">특정 스킬만 빼기 <code>ignoredSkills</code>(글롭) · 특정만 허용 <code>includeSkills</code>.</div></div>
+      </div>
+    </div>
+    <div class="emphasis" style="margin-top:16px;"><strong>판단</strong> — 흡수는 기본 켜짐이고 그게 덱의 핵심 셀링포인트(이주 편의)다. 끄면 그 이점을 잃으니 <strong>기본값은 켜둔다</strong>. 스킬을 많이 흡수해 시스템 프롬프트·슬래시 메뉴가 무거워졌을 때만 위 토글로 줄이고, 필요한 스킬만 <code>~/.omp/agent/skills/</code>에 직접 둔다.</div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>config-usage</code>·<code>skills</code>·<code>slash-command-internals</code>·<code>models</code> · <code>~/.omp/agent/config.yml</code> · <code>omp --help</code>·<code>config list</code>(v16.1.9 실측). <span class="src-k">주의</span> <code>/extensions</code>는 omp 확장 저작 시스템이지 흡수 토글이 아니다.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>4 / 28</span></div></section>
+
+<section class="slide" id="s10">
+<div class="s-header"><span class="pg">5 / 28</span><span class="navind" data-i="4"></span></div>
+  <div class="content top">
+    <div class="section-label">정직하게 · omp가 (기본) 안 가진 것</div>
+    <h2 class="s-title">omp가 (기본) <span class="accent">안 가진 것</span></h2>
+    <p class="body-text" style="margin-bottom:10px;">방금 본 대로 기존 환경은 그대로 흡수된다 — 단, <strong>흡수 못 하거나 구조상 없는 것</strong>도 정직하게 짚는다.</p>
+    <div class="grid-3">
+      <div class="card"><div class="card-num">클라우드 · 원격 실행</div><div class="card-body">CC <code>/ultraplan</code>·<code>/autofix-pr</code>·<code>/background</code>·<code>/batch</code>(워크트리 PR), Codex cloud-tasks. → omp는 <strong>로컬 전용</strong>, 클라우드 오케스트레이션 없음.</div></div>
+      <div class="card"><div class="card-num">예약 · 스케줄</div><div class="card-body">CC <code>/schedule</code> — 정해진 시각에 작업 실행. omp에는 없음.</div></div>
+      <div class="card"><div class="card-num">호스티드 통합</div><div class="card-body">CC <code>/chrome</code>·<code>/desktop</code>·<code>/mobile</code>·<code>/remote-control</code>·<code>/teleport</code>·<code>/install-github-app</code>·<code>/install-slack-app</code> → Anthropic 호스티드 생태계.</div></div>
+      <div class="card"><div class="card-num">재미 · 온보딩</div><div class="card-body">CC <code>/insights</code>·<code>/powerup</code>·<code>/radio</code>, Codex <code>/pets</code>·<code>/vim</code>.</div></div><div class="card"><div class="card-num">effort 상한</div><div class="card-body">omp는 effort를 <strong>off~xhigh</strong>까지 — Anthropic API의 <code>max</code>(xhigh 위)·CC의 <code>ultracode</code>는 미노출(ultracode는 CC 하네스 오케스트레이션). 단 <strong>Anthropic 자신이 “Opus는 코딩에 xhigh 권장, max는 frontier 전용·비용 대비 이득 작고 overthinking 위험”</strong>이라 명시 → 실손해 미미.<br><strong>⚠ 단 picker·<code>/model</code>은 omp 최상위(xhigh)를 “max”로 표기</strong>(상태줄은 “xhigh”) — 이 “max”는 xhigh의 라벨일 뿐 Anthropic frontier max가 아니다.</div></div>
+    </div>
+    <div class="emphasis" style="margin-top:16px;">omp가 못 하는 건 <strong>구조(로컬 전용)</strong>에서 온다 — 클라우드·원격·예약·호스티드 통합은 구조상 없다. 반면 <strong>스킬·슬래시·플러그인은 갭이 아니다</strong>: omp가 <code>~/.claude</code>·<code>~/.codex</code>에서 읽어 합친다(단 CC 내장 번들 스킬·<code>.claude/agents</code> 에이전트는 제외). 공개 플러그인 스킬은 <code>SKILL.md</code>만 복사하면 네이티브로 동작.</div>
+    <div class="source-line"><span class="src-k">출처</span> code.claude.com/docs/en/commands · code.claude.com/docs/en/skills(번들=CC 내부) · developers.openai.com/codex · platform.claude.com/docs/en/build-with-claude/effort.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>5 / 28</span></div></section>
+
+<section class="slide dark" id="s3">
+<div class="s-header"><span class="pg">6 / 28</span><span class="navind" data-i="5"></span></div>
+  <div class="content top">
+    <div class="section-label">하네스 &amp; 토큰 오버헤드</div>
+    <div class="hero-line">모든 코딩 AI엔 <span class="accent">우리가 못 건드리는 하네스</span>가 있다.<br>같은 모델이라도 그 하네스가 <span class="accent">토큰 소모와 정확도를 가른다.</span></div>
+    <p class="body-text" style="margin-bottom:4px;"><strong>하네스</strong> = 코딩 AI가 입력 토큰을 관리하고 모델 출력을 실제 파일 변경으로 잇는 <strong>인터페이스 층(상위 개념)</strong>. 모델은 같아도 이 층은 도구마다 다르고 보통 사용자가 못 바꿈. &nbsp;<strong>오버헤드</strong> = 그 하네스가 매 요청에 얹는 <strong>토큰 세금(하위 개념)</strong>. <span style="opacity:0.82;">※ Anthropic은 <code>CLAUDE.md</code>를 ‘메모리(사용자 지침)’, OpenAI는 <code>AGENTS.md</code>를 ‘에이전트 지침’이라 부른다 — 하네스가 <em>읽어들이는</em> 입력이지 하네스 자체가 아니다.</span></p>
+    <div class="evidence">
+      <div class="ev"><div class="ev-n">01</div><div class="ev-b"><strong>하네스 품질(편집 포맷).</strong> Hashline로 바꾸면 편집이 한 번에 맞아 <strong>재시도가 사라지고 평균 토큰 20~30%↓</strong> — 강한 모델에도 통하는 실질 이득. 정확도 향상은 <strong>약한 모델일수록 큼</strong>(Grok Code Fast 1 6.7%→68.3%), <strong>Sonnet급은 +1~5pp</strong>.<span class="ev-note">→ 이 이득은 ‘편집 포맷 품질’에서 온다 — 03의 오버헤드(낭비) 절감과는 다른 레버다.</span></div></div>
+      <div class="ev"><div class="ev-n">02</div><div class="ev-b"><strong>하네스가 변수라는 독립 증거.</strong> 같은 <strong>Opus</strong>가 CORE 벤치에서 자체 기본 하네스 → Claude Code 하네스로 바꾸자 점수 <strong>~2배</strong>(제3자 보고).<span class="ev-note">→ 하네스가 점수를 가른다는 일반 증거(여기선 CC 사례) — ‘좋은 하네스가 중요하다’는 omp의 논지와 같은 축이다.</span></div></div>
+      <div class="ev"><div class="ev-n">03</div><div class="ev-b"><strong>오버헤드(낭비)도 실재.</strong> 잘 설계된 하네스가 성능을 올려도(02), <strong>같은 하네스가 토큰은 낭비</strong>할 수 있다 — 다른 축이다. Claude Code 90일 측정 토큰 <strong>~75%가 오버헤드</strong>(규칙·스키마·과거 대화; 상당부분 캐시되나 매 턴 재전송·캐시미스 churn).<span class="ev-note">→ 이 ~75%는 전송 토큰 비중이지 실청구액·지연과 같지 않다 — 캐시 읽기는 할인된다.</span></div></div>
+    </div>
+    <div class="source-line"><span class="src-k">출처</span> README 배지(규모) · blog.can.ac/the-harness-problem + repo <code>packages/typescript-edit-benchmark</code> · x.com/sayashk(Opus CORE, HN #46988596) · acdigest(CC ~75%, 90일) · anthropics/claude-code #44617·#52979. <span class="src-k">정직</span> Hashline=저자 자가벤치(독립검증 0) · Opus CORE=제3자 · CC 75%=1인 90일. 용어: code.claude.com/docs/memory(CLAUDE.md=메모리) · anthropic.com/engineering/effective-harnesses(하네스 정의).</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>6 / 28</span></div></section>
+
+<section class="slide" id="s4">
+<div class="s-header"><span class="pg">7 / 28</span><span class="navind" data-i="6"></span></div>
+  <div class="content top">
+    <div class="section-label">강점 비교 · 구조적 vs 편의</div>
+    <h2 class="s-title" style="margin-bottom:6px;">OMP는 <span class="accent">무엇이 다른가</span></h2>
+    <div class="ab-label a"><span class="ab-tag">A</span> 구조적 차이 — 설치로는 못 따라옴 (현재 이식 어려움)</div>
+    <div class="evidence">
+      <div class="ev"><div class="ev-n">1</div><div class="ev-b"><strong>Hashline 편집 포맷</strong> — 하네스 본체 — OMC·OMX 확장팩으로 이식 불가(호스트 하네스 교체 필요).</div></div>
+      <div class="ev"><div class="ev-n">2</div><div class="ev-b"><strong>네이티브 멀티프로바이더(한 세션 40+)</strong> — CC=Anthropic·Codex=OpenAI 고정, OMC·OMX는 다른 CLI로 셸아웃. omp는 한 세션서 교체.</div></div>
+      <div class="ev"><div class="ev-n">3</div><div class="ev-b"><strong>구조화 서브에이전트 출력</strong>(raw JSONL 아님) — 하네스 레벨.</div></div>
+      <div class="ev"><div class="ev-n">4</div><div class="ev-b"><strong>컨텍스트 관리 — 의미 기반 무의미결과 제거 + snapcompact(16.1.8부터 기본)</strong> — 문서상 동등 기능 못 찾음 (뒤 ‘컨텍스트 관리’ 상세에서 근거).</div></div>
+    </div>
+    <div class="ab-label b"><span class="ab-tag">B</span> 편의 차이 — 바로 되느냐 vs 세팅하느냐</div>
+<div class="cmp-wrap"><table class="cmp"><colgroup><col class="col-rh4"><col class="col-omp4"><col class="col-ccx4"></colgroup><thead><tr><th>항목</th><th class="c-omp">omp · 코어 내장</th><th>Claude Code · Codex · 연동/확장</th></tr></thead><tbody><tr><td class="rh">LSP · DAP</td><td class="c-omp">코어 내장 → 세팅 0</td><td>IDE 연동(/<wbr>ide)·<wbr>외부 의존; DAP는 bash 우회</td></tr><tr><td class="rh">ripgrep · glob 검색</td><td class="c-omp">네이티브 내장</td><td>검색 도구는 있음 — 체감차</td></tr><tr><td class="rh">에이전트 로스터 · 상호운용 · 관측성</td><td class="c-omp">기본 제공</td><td>확장팩·<wbr>설정으로 가능</td></tr><tr><td class="rh">격리 프로필</td><td class="c-omp"><code>--profile</code>·<code>--alias</code> 내장 (인증·세션·설정 완전 격리)</td><td>CC 네이티브 없음(<code>CLAUDE_CONFIG_DIR</code> 우회)·Codex는 config 프리셋만</td></tr></tbody></table></div>
+    <div class="emphasis" style="margin-top:14px;">진짜 차이는 <strong>A(구조적)</strong>다. B는 <strong>“바로 되느냐 vs 세팅하느냐”</strong>의 편의 차이일 뿐 — 남들도 연동·확장으로 상당수 가능.</div>
+    <div class="source-line"><span class="src-k">출처</span> blog.can.ac/the-harness-problem · oh-my-pi repo · 각 공식 문서. <span class="src-k">정직</span> A만 구조적 강점으로 단언; B는 편의 차이(남도 가능).</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>7 / 28</span></div></section>
+
+<section class="slide" id="s5">
+<div class="s-header"><span class="pg">8 / 28</span><span class="navind" data-i="7"></span></div>
+  <div class="content top">
+    <div class="section-label">상세 ① · Hashline 편집</div>
+    <h2 class="s-title">Hashline <span class="accent">편집</span></h2>
+    <div class="emphasis"><strong>쉽게 —</strong> 파일을 통째로 다시 받아쓰지 말고, <strong>“17번째 줄, 지문(콘텐츠 해시) a3”</strong>처럼 줄번호 + 짧은 지문만 짚어 주는 방식. 지문이 안 맞으면(=그새 누가 바꿈) 자동 거부 → 엉뚱한 줄을 안 건드린다.</div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card"><div class="card-num">개발자용</div><div class="card-body">read/search가 줄마다 <code>22:f1| ...</code>처럼 콘텐츠 해시를 부여, 편집은 앵커 참조 → <strong>옛 내용 재현 불필요</strong>. CC <code>str_replace</code>는 공백까지 완전일치 요구(“String not found” 다발), Codex <code>apply_patch</code>는 전용 diff라 타모델 실패율↑(Grok 4 50.7%, GLM-4.7 46.2%).</div></div>
+      <div class="card purple"><div class="card-num">벤치</div><div class="card-body">평균 토큰 <strong>20~30%↓</strong> · Claude Sonnet 4.5 +1.6pp · Gemini 3 Flash +5pp(→78.3%) · Grok 4 Fast 출력토큰 <strong>−61%</strong> · MiniMax <strong>2.1배</strong>. 정확도 향상은 <strong>약한 모델일수록 큼</strong> — 극단값 Grok Code Fast 1 6.7%→68.3%. (16모델·180과제×3)</div></div>
+    </div>
+    <div class="source-line"><span class="src-k">출처</span> blog.can.ac/the-harness-problem(벤치·편집포맷 섹션) · repo <code>packages/typescript-edit-benchmark</code>(runner·fixtures.tar.gz·all_models_results.json[6모델]) · GeekNews #26648. <span class="src-k">정직</span> 저자 자가벤치 — 독립검증 0 · −61%=Grok 4 Fast 출력토큰 한정.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>8 / 28</span></div></section>
+
+<section class="slide" id="s6">
+<div class="s-header"><span class="pg">9 / 28</span><span class="navind" data-i="8"></span></div>
+  <div class="content top">
+    <div class="section-label">상세 ② · 도구 하네스</div>
+    <h2 class="s-title">도구 <span class="accent">하네스</span></h2>
+    <div class="grid-3">
+      <div class="card"><div class="card-num">커널</div><div class="card-title">영속 Python · Bun</div><div class="card-body">커널이 <strong>read/search/task</strong>를 되부른다. 도구 호출과 코드 실행이 한 몸.</div></div>
+      <div class="card"><div class="card-num">네이티브</div><div class="card-title">ripgrep · glob · bash 내장</div><div class="card-body">검색·실행을 외부 프로세스에 떠넘기지 않고 자체 처리.</div></div>
+      <div class="card purple"><div class="card-num">read</div><div class="card-title">통째로 안 뱉는다</div><div class="card-body">파일을 구조 요약으로 읽어 토큰을 아낀다.</div></div>
+    </div>
+    <div class="emphasis" style="margin-top:18px;"><strong>omp 서브에이전트는 스키마 검증 객체만 반환한다</strong> → 토큰 절약(검증 가능). <span style="opacity:0.78;">omp 저자에 따르면 Claude Code는 서브에이전트가 raw JSONL을 흘려 낭비한다(저자 주장).</span></div>
+    <div class="source-line"><span class="src-k">출처</span> blog.can.ac/the-harness-problem · oh-my-pi repo. <span class="src-k">정직</span> 서브에이전트 JSONL 낭비는 omp 저자 주장.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>9 / 28</span></div></section>
+
+<section class="slide" id="s7">
+<div class="s-header"><span class="pg">10 / 28</span><span class="navind" data-i="9"></span></div>
+  <div class="content top">
+    <div class="section-label">상세 ③ · IDE · 디버거</div>
+    <h2 class="s-title">IDE · 디버거 <span class="accent">코어 내장</span></h2>
+    <div class="grid-2">
+      <div class="card"><div class="card-num">LSP</div><div class="card-title">정의 · 참조 · 이름변경 · 진단 · code_actions</div><div class="card-body">omp는 <strong>클라이언트 코어 내장 → 연동 세팅 0</strong>. CC·Codex는 <code>/ide</code> 연동·외부 의존으로 비슷하게 가능(편의 차이).</div></div>
+      <div class="card purple"><div class="card-num">DAP</div><div class="card-title">브레이크포인트 · 스텝 · 스택 · 변수</div><div class="card-body">omp는 디버거를 <strong>구조화 도구로 내장</strong> → 연동 세팅 0. 경쟁자는 native 디버거 도구면이 없어 bash 우회(편의 차이 중 체감 큰 쪽).</div></div>
+    </div>
+    <div class="emphasis" style="margin-top:18px;">정리 — 분류는 '편의'지만 <strong>DAP는 체감 큰 제품 차이</strong> — 경쟁 에이전트엔 구조화 디버거 도구면(브레이크포인트·스텝·변수)이 아예 없다. omp는 클라이언트 코어 내장이라 연동 세팅 0(언어 서버·디버그 어댑터 설치는 도구 공통).</div>
+    <div class="source-line"><span class="src-k">출처</span> oh-my-pi repo · 내장문서(tools/lsp · tools/debug).</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>10 / 28</span></div></section>
+
+<section class="slide" id="s8">
+<div class="s-header"><span class="pg">11 / 28</span><span class="navind" data-i="10"></span></div>
+  <div class="content top">
+    <div class="section-label">상세 ④ · 컨텍스트 관리 (정직)</div>
+    <h2 class="s-title">컨텍스트 <span class="accent">관리</span></h2>
+    <p class="body-text" style="margin-bottom:10px;">솔직히 — omp 압축은 <strong>① 더 큰 컨텍스트 모델로 승격 · ② 무의미·과대 출력 정리 · ③ LLM 요약</strong> 3단계인데, <strong>대부분 CC·Codex와 비슷하다.</strong> omp 고유로 단언할 수 있는 건 둘뿐.</p>
+    <div class="grid-2">
+      <div class="card"><div class="card-num">공통 — 차별 아님</div><div class="card-body">· <strong>③ LLM 요약</strong> = Claude Code와 사실상 동일 (Codex는 서버측 blob)<br>· <strong>② 크기·오래된 출력 정리</strong>(오래된·큰 것부터 지움)도 CC(microcompact)·Codex(trim)가 함</div></div>
+      <div class="card purple"><div class="card-num">omp 고유 — 단 2개</div><div class="card-body">· <strong>의미 기반 무의미결과 제거</strong> — 0건 검색·타임아웃·빈 결과를 <code>[Uneventful result elided]</code>로(<code>compaction.dropUseless</code>). CC·Codex는 (공개 문서 기준) 크기·최신성 위주 — 동등한 의미 필터는 확인 못 함. 비울 때도 <strong>캐시 인지</strong> — 잔여 컨텍스트가 작거나 캐시 만료 뒤에만 지워, 살아있는 prompt cache를 불필요하게 깨지 않는다.<br>· <strong>snapcompact</strong> — 버릴 대화를 이미지로(비전·결정적, 16.1.8부터 기본 압축; 비전 불가·예산 초과 시 LLM 요약 폴백).</div></div>
+    </div>
+    <div class="emphasis" style="margin-top:12px;"><strong>① promotion</strong>(더 큰 컨텍스트 모델로 먼저 갈아타기)는 omp 고유지만, 이미 <strong>최대 컨텍스트 모델을 쓰면 실효성이 낮다</strong>.</div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>compaction.md</code>(dropUseless·pruneSupersededToolResults·snapcompact; 16.1.8부터 기본) · CompactionAudit(CC microcompact <code>Rg()</code>·Codex <code>trim_function_call_history</code>·<code>/v1/responses/compact</code> blob · CC promotion 미구현 #23920).</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>11 / 28</span></div></section>
+
+<section class="slide" id="s9">
+<div class="s-header"><span class="pg">12 / 28</span><span class="navind" data-i="11"></span></div>
+  <div class="content top">
+    <div class="section-label">상세 ⑤ · 멀티프로바이더</div>
+    <h2 class="s-title">네이티브 <span class="accent">멀티프로바이더</span></h2>
+    <div class="grid-2">
+      <div class="card purple"><div class="card-num">omp · 네이티브</div><div class="card-body">40+ provider 한 세션. <code>/model</code> 즉시 교체, <code>task</code> 서브에이전트별 provider. <strong>주요 provider는 OAuth 구독 재사용(Claude·ChatGPT·Gemini·Copilot·Cursor 등)</strong> — 키 없이; 그 외는 API 키·게이트웨이.</div></div>
+      <div class="card"><div class="card-num">OMC · OMX (확장팩)</div><div class="card-body">타모델을 쓰려면 <strong>다른 CLI로 셸아웃</strong>(<code>/ask</code>, tmux 워커) — 그 작업은 호스트 하네스 밖에서 돌아 <strong>구조화 결과·세션 관측성 없이 텍스트만 오간다</strong>.</div></div>
+    </div>
+    <div class="source-line"><span class="src-k">출처</span> oh-my-pi repo · 내장문서.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>12 / 28</span></div></section>
+
+<section class="slide" id="s11">
+<div class="s-header"><span class="pg">13 / 28</span><span class="navind" data-i="12"></span></div>
+  <div class="content top">
+    <div class="section-label">단축키 모음 · 세팅이 아니라 조작</div>
+    <h2 class="s-title"><span class="accent">단축키</span> 모음</h2>
+<div class="cmp-wrap"><table class="cmp keys"><colgroup><col class="col-kact"><col class="col-kkey"><col class="col-kid"></colgroup><thead><tr><th>동작</th><th>기본 키</th><th>액션 ID</th></tr></thead><tbody><tr><td class="rh">사고강도(effort) 순환</td><td class="k-key">Shift+Tab</td><td class="k-id">app.thinking.cycle</td></tr><tr><td class="rh">thinking 블록 표시 토글</td><td class="k-key">Ctrl+T</td><td class="k-id">app.thinking.toggle</td></tr><tr><td class="rh">플랜 모드 토글</td><td class="k-key">Alt+Shift+P</td><td class="k-id">app.plan.toggle</td></tr><tr><td class="rh">모델 순환(앞/뒤)</td><td class="k-key">Ctrl+P / Shift+Ctrl+P</td><td class="k-id">app.model.cycleForward/Backward</td></tr><tr><td class="rh">임시 모델 선택</td><td class="k-key">Alt+P</td><td class="k-id">app.model.selectTemporary</td></tr><tr><td class="rh">모델 선택기(역할 설정)</td><td class="k-key">Alt+M</td><td class="k-id">app.model.select</td></tr><tr><td class="rh">압축/도구출력 펼치기</td><td class="k-key">Ctrl+O</td><td class="k-id">app.tools.expand</td></tr><tr><td class="rh">프롬프트 히스토리 검색</td><td class="k-key">Ctrl+R</td><td class="k-id">app.history.search</td></tr><tr><td class="rh">외부 에디터로 편집</td><td class="k-key">Ctrl+G</td><td class="k-id">app.editor.external</td></tr><tr><td class="rh">후속 메시지 큐</td><td class="k-key">Ctrl+Q / Ctrl+Enter</td><td class="k-id">app.message.followUp</td></tr><tr><td class="rh">큐에서 빼기</td><td class="k-key">Alt+Up</td><td class="k-id">app.message.dequeue</td></tr><tr><td class="rh">프롬프트 전체 복사</td><td class="k-key">Alt+Shift+C</td><td class="k-id">app.clipboard.copyPrompt</td></tr><tr><td class="rh">현재 줄 복사</td><td class="k-key">Alt+Shift+L</td><td class="k-id">app.clipboard.copyLine</td></tr><tr><td class="rh">이미지 붙여넣기</td><td class="k-key">Ctrl+V (Win: Alt+V)</td><td class="k-id">app.clipboard.pasteImage</td></tr><tr><td class="rh">화면 리셋</td><td class="k-key">Ctrl+L</td><td class="k-id">app.display.reset</td></tr><tr><td class="rh">마지막 턴 재시도</td><td class="k-key">Alt+R</td><td class="k-id">app.retry</td></tr><tr><td class="rh">음성입력(push-to-talk)</td><td class="k-key">Space 길게</td><td class="k-id">app.stt.toggle (기본 미바인딩)</td></tr></tbody></table></div>
+    <div class="emphasis" style="margin-top:14px;">커스텀 — <code>~/.omp/agent/keybindings.yml</code>(액션ID → 키). 현재 활성 바인딩은 세션에서 <code>/hotkeys</code>.<br><strong>사고 최상위 레벨</strong>은 picker·<code>/model</code>엔 “max”, 상태줄엔 “xhigh”로 표기 — 같은 레벨(xhigh)이다.</div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>omp://keybindings.md</code>(액션ID·기본키 표) · 커스텀 <code>~/.omp/agent/keybindings.yml</code>.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>13 / 28</span></div></section>
+
+<section class="slide wide" id="s12">
+<div class="s-header"><span class="pg">14 / 28</span><span class="navind" data-i="13"></span></div>
+  <div class="content top">
+    <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
+    <h2 class="s-title">슬래시 명령어 ① <span class="accent">세션 · 브랜치</span></h2>
+    <div class="badges">
+      <span class="badge omp"><strong>omp</strong> ~58</span>
+      <span class="badge"><strong>Claude Code</strong> ~80</span>
+      <span class="badge"><strong>OMC</strong> 28 cmd · 38 skill</span>
+      <span class="badge"><strong>Codex</strong> ~50</span>
+      <span class="badge"><strong>OMX</strong> 44 skill</span>
+    </div>
+    <p class="body-text" style="margin:2px 0 8px; font-size:12.5px; opacity:0.72;">※ 표는 기능을 1:1로 똑같이 맞춘 게 아니라 <strong>가장 비슷한 것끼리</strong> 나란히 둔 것 — 일부는 클라우드에서 도는 기능(CC <code>/batch</code>·<code>/ultraplan</code> 등)이거나 여러 기능을 직접 조합한 경우다.</p>
+<div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">세션 · 대화</td></tr><tr><td class="rh">새 세션/대화 비우기</td><td class="c-omp">/<wbr>new·<wbr>/<wbr>fresh</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>clear(alias /<wbr>new,/<wbr>reset)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>new·<wbr>/<wbr>clear</span></td></tr><tr><td class="rh">세션 재개</td><td class="c-omp">/<wbr>resume</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>resume(alias /<wbr>continue)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>resume</span></td></tr><tr><td class="rh">이름 변경</td><td class="c-omp">/<wbr>rename</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>rename</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>rename</span></td></tr><tr><td class="rh">삭제/보관</td><td class="c-omp">/<wbr>drop</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>delete·<wbr>/<wbr>archive</span></td></tr><tr><td class="rh">작업 디렉터리 변경</td><td class="c-omp">/<wbr>move</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>cd·<wbr>/<wbr>add-dir</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">내보내기/복사</td><td class="c-omp">/<wbr>export·<wbr>/<wbr>dump·<wbr>/<wbr>copy</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>export</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>copy·<wbr>/<wbr>raw</span></td></tr><tr><td class="rh">공유 링크</td><td class="c-omp">/<wbr>share</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">실시간 협업</td><td class="c-omp">/<wbr>collab·<wbr>/<wbr>join·<wbr>/<wbr>leave</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>team(tmux)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$team(tmux)</span></td></tr><tr><td class="rh">세션 관리(워크트리)</td><td class="c-omp">/<wbr>session</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>project-session-manager</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr class="grp"><td colspan="4">브랜치 · 되감기</td></tr><tr><td class="rh">분기</td><td class="c-omp">/<wbr>branch</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>branch</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>fork</span></td></tr><tr><td class="rh">포크</td><td class="c-omp">/<wbr>fork</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>fork</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>fork</span></td></tr><tr><td class="rh">세션 트리 탐색</td><td class="c-omp">/<wbr>tree</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">되돌리기 · 재시도</td><td class="c-omp">/<wbr>retry (대화만)</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>rewind (코드+대화)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr></tbody></table></div>
+    <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>14 / 28</span></div></section>
+
+<section class="slide wide" id="s13">
+<div class="s-header"><span class="pg">15 / 28</span><span class="navind" data-i="14"></span></div>
+  <div class="content top">
+    <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
+    <h2 class="s-title">슬래시 명령어 ② <span class="accent">컨텍스트 · 모델/모드</span></h2>
+<div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">컨텍스트 · 압축</td></tr><tr><td class="rh">수동 압축</td><td class="c-omp">/<wbr>compact</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>compact</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>compact</span></td></tr><tr><td class="rh">무거운 내용 버리기</td><td class="c-omp">/<wbr>shake</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">핸드오프(새 세션 인계)</td><td class="c-omp">/<wbr>handoff</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">컨텍스트 사용량 보기</td><td class="c-omp">/<wbr>context</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>context</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>status</span></td></tr><tr><td class="rh">곁가지(임시) 질문</td><td class="c-omp">/<wbr>btw·<wbr>/<wbr>tan</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>btw·<wbr>/<wbr>background</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>side·<wbr>/<wbr>btw</span></td></tr><tr><td class="rh">리캡 요약</td><td class="c-omp">/<wbr>handoff</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>recap</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr class="grp"><td colspan="4">모델 · 모드 · 사고강도</td></tr><tr><td class="rh">모델 전환</td><td class="c-omp">/<wbr>model</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>model</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>model</span></td></tr><tr><td class="rh">임시 모델</td><td class="c-omp">/<wbr>switch(Alt+P)</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">사고강도(effort)</td><td class="c-omp">Shift+Tab 순환</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>effort(low~ultracode)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>model(reasoning)</span></td></tr><tr><td class="rh">빠른 티어</td><td class="c-omp">/<wbr>fast</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>fast</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>fast</span></td></tr><tr><td class="rh">플랜 모드</td><td class="c-omp">/<wbr>plan</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>plan</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>plan</span></td></tr><tr><td class="rh">목표(자율)</td><td class="c-omp">/<wbr>goal·<wbr>/<wbr>guided-goal</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>goal</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>goal</span></td></tr><tr><td class="rh">루프</td><td class="c-omp">/<wbr>loop</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>loop(alias /<wbr>proactive)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">어드바이저(2차 모델)</td><td class="c-omp">/<wbr>advisor</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>advisor</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">도구 강제</td><td class="c-omp">/<wbr>force</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">권한/승인</td><td class="c-omp"><span class="c-ind">(approval mode)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>permissions</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>permissions·<wbr>/<wbr>approve</span></td></tr><tr><td class="rh">성격/톤</td><td class="c-omp"><span class="c-x">—</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>personality</span></td></tr></tbody></table></div>
+    <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>15 / 28</span></div></section>
+
+<section class="slide wide" id="s14">
+<div class="s-header"><span class="pg">16 / 28</span><span class="navind" data-i="15"></span></div>
+  <div class="content top">
+    <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
+    <h2 class="s-title">슬래시 명령어 ③ <span class="accent">계획 · 리뷰</span></h2>
+<div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">계획 · 심층 · 자율</td></tr><tr><td class="rh">딥 인터뷰</td><td class="c-omp">ask/<wbr>plan 에이전트</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>/<wbr>deep-interview</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$deep-interview</span></td></tr><tr><td class="rh">합의 계획</td><td class="c-omp">plan+reviewer+oracle</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>ralplan·<wbr>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ralplan·<wbr>$prometheus-strict</span></td></tr><tr><td class="rh">자율 파이프라인</td><td class="c-omp">/<wbr>goal·<wbr>/<wbr>loop</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>autopilot·<wbr>ralph</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$autopilot·<wbr>$ralph·<wbr>$ultragoal</span></td></tr><tr><td class="rh">울트라플랜/심층리서치</td><td class="c-omp">/<wbr>plan-review·<wbr>/<wbr>tan</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>ultraplan·<wbr>/<wbr>deep-research</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$autoresearch·<wbr>$deepsearch</span></td></tr><tr><td class="rh">병렬 팀 실행</td><td class="c-omp">task fan-out</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>batch</span><span class="seg"><span class="seg-l ext">OMC</span>team·<wbr>ultrawork</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$team·<wbr>$swarm·<wbr>$ultrawork</span></td></tr><tr><td class="rh">클라우드 계획/PR 자동수정/예약</td><td class="c-omp"><span class="c-x">—</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>ultraplan·<wbr>/<wbr>autofix-pr·<wbr>/<wbr>schedule</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr class="grp"><td colspan="4">리뷰 · QA · 검증</td></tr><tr><td class="rh">코드 리뷰</td><td class="c-omp">/<wbr>review+reviewer</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>code-review·<wbr>/<wbr>review</span><span class="seg"><span class="seg-l ext">OMC</span>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>review</span><span class="seg"><span class="seg-l ext">OMX</span>$code-review</span></td></tr><tr><td class="rh">보안 리뷰</td><td class="c-omp">reviewer</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>security-review</span><span class="seg"><span class="seg-l ext">OMC</span>security-reviewer</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$security-review</span></td></tr><tr><td class="rh">단순화/슬롭 정리</td><td class="c-omp">task</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>simplify</span><span class="seg"><span class="seg-l ext">OMC</span>ai-slop-cleaner</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ai-slop-cleaner</span></td></tr><tr><td class="rh">변경 diff</td><td class="c-omp"><span class="c-ind">(read/<wbr>도구)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>diff</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>diff</span></td></tr><tr><td class="rh">실행/검증</td><td class="c-omp">task</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>run·<wbr>/<wbr>verify</span><span class="seg"><span class="seg-l ext">OMC</span>ultraqa</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ultraqa·<wbr>$tdd</span></td></tr><tr><td class="rh">시각 검증</td><td class="c-omp">browser+designer</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>visual-verdict</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$visual-verdict</span></td></tr><tr><td class="rh">프론트엔드 디자인 스킬</td><td class="c-omp"><span class="c-ind">(범용 로더 적재)</span></td><td><span class="seg"><span class="seg-l">CC</span>frontend-design</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$design</span></td></tr></tbody></table></div>
+    <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>16 / 28</span></div></section>
+
+<section class="slide wide" id="s15">
+<div class="s-header"><span class="pg">17 / 28</span><span class="navind" data-i="16"></span></div>
+  <div class="content top">
+    <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
+    <h2 class="s-title">슬래시 명령어 ④ <span class="accent">멀티모델 · 메모리 · 플러그인</span></h2>
+<div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">멀티모델 · 서브에이전트</td></tr><tr><td class="rh">서브에이전트 fan-out</td><td class="c-omp">task+irc</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>agents·<wbr>/<wbr>tasks</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>agent(실험)</span></td></tr><tr><td class="rh">다른 provider 모델 라우팅</td><td class="c-omp">/<wbr>model(네이티브)</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>ask·<wbr>ccg</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ask·<wbr>$ask-claude·<wbr>$ask-gemini</span></td></tr><tr><td class="rh">백그라운드 작업</td><td class="c-omp">/<wbr>tan·<wbr>/<wbr>jobs</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>background·<wbr>/<wbr>tasks</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>ps·<wbr>/<wbr>stop</span></td></tr><tr class="grp"><td colspan="4">메모리 · 지식</td></tr><tr><td class="rh">메모리</td><td class="c-omp">/<wbr>memory</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>memory</span><span class="seg"><span class="seg-l ext">OMC</span>remember</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>memories</span></td></tr><tr><td class="rh">프로젝트 init</td><td class="c-omp"><span class="c-ind">(자동 흡수)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>init</span><span class="seg"><span class="seg-l ext">OMC</span>deepinit</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>init</span></td></tr><tr><td class="rh">위키/지식</td><td class="c-omp">librarian</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>wiki·<wbr>skillify</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$wiki</span></td></tr><tr><td class="rh">스킬</td><td class="c-omp"><span class="c-ind">(extensions)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>skills·<wbr>/<wbr>reload-skills</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>skills</span><span class="seg"><span class="seg-l ext">OMX</span>$skill</span></td></tr><tr class="grp"><td colspan="4">플러그인 · MCP · 확장</td></tr><tr><td class="rh">MCP</td><td class="c-omp">/<wbr>mcp</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>mcp</span><span class="seg"><span class="seg-l ext">OMC</span>mcp-setup</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>mcp</span></td></tr><tr><td class="rh">플러그인/앱</td><td class="c-omp">/<wbr>plugins·<wbr>/<wbr>marketplace</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>plugin</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>plugins·<wbr>/<wbr>apps</span></td></tr><tr><td class="rh">플러그인 리로드</td><td class="c-omp">/<wbr>reload-plugins</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>reload-plugins</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">IDE 연동</td><td class="c-omp"><span class="c-ind">(LSP 내장)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>ide</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>ide</span></td></tr><tr><td class="rh">파일 첨부</td><td class="c-omp"><span class="c-ind">(read)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>mention</span></td></tr><tr><td class="rh">훅</td><td class="c-omp"><span class="c-ind">(extensions)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>hooks</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>hooks</span></td></tr><tr><td class="rh">알림 설정</td><td class="c-omp"><span class="c-ind">(extension)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>configure-notifications</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$configure-notifications</span></td></tr><tr><td class="rh">SSH 호스트</td><td class="c-omp">/<wbr>ssh</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr></tbody></table></div>
+    <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>17 / 28</span></div></section>
+
+<section class="slide wide" id="s16">
+<div class="s-header"><span class="pg">18 / 28</span><span class="navind" data-i="17"></span></div>
+  <div class="content top">
+    <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
+    <h2 class="s-title">슬래시 명령어 ⑤ <span class="accent">진단 · 설정</span></h2>
+<div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">진단 · 사용량 · 설정</td></tr><tr><td class="rh">사용량/비용</td><td class="c-omp">/<wbr>usage·<wbr>omp usage</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>usage(alias /<wbr>cost,/<wbr>stats)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>usage</span></td></tr><tr><td class="rh">상태/통계</td><td class="c-omp">/<wbr>stats·<wbr>/<wbr>jobs</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>status</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>status</span></td></tr><tr><td class="rh">진단</td><td class="c-omp">/<wbr>debug</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>doctor</span><span class="seg"><span class="seg-l ext">OMC</span>omc-doctor</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>debug-config</span><span class="seg"><span class="seg-l ext">OMX</span>$doctor</span></td></tr><tr><td class="rh">도구 목록</td><td class="c-omp">/<wbr>tools</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">설정</td><td class="c-omp">/<wbr>settings·<wbr>/<wbr>setup</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>config(alias /<wbr>settings)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">(config.toml)</span></span></td></tr><tr><td class="rh">상태줄</td><td class="c-omp">/<wbr>settings(statusLine)</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>statusline</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>statusline</span></td></tr><tr><td class="rh">HUD</td><td class="c-omp"><span class="c-ind">(statusLine)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>hud</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$hud</span></td></tr><tr><td class="rh">단축키 보기/리맵</td><td class="c-omp">/<wbr>hotkeys</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>keybindings</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>keymap·<wbr>/<wbr>vim</span></td></tr><tr><td class="rh">도움말</td><td class="c-omp">/<wbr>help</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>help</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">(help)</span></span></td></tr><tr><td class="rh">로그인/아웃</td><td class="c-omp">/<wbr>login·<wbr>/<wbr>logout</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>login·<wbr>/<wbr>logout</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>logout</span></td></tr><tr><td class="rh">변경알림/업데이트</td><td class="c-omp">/<wbr>changelog·<wbr>omp update</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>release-notes</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">자가개선 규칙</td><td class="c-omp">/<wbr>omfg(TTSR)</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>self-improve</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">종료</td><td class="c-omp">/<wbr>exit·<wbr>/<wbr>quit</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>exit(alias /<wbr>quit)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>quit·<wbr>/<wbr>exit</span></td></tr></tbody></table></div>
+    <div class="source-line"><span class="src-k">※</span> OMC는 <code>/oh-my-claudecode:&lt;name&gt;</code>, OMX는 <code>$&lt;name&gt;</code> 접두 · Codex 멀티에이전트는 실험(<code>/experimental</code>) · CC 명령 세트는 버전마다 변동(2026-06). <span class="src-k">출처</span> code.claude.com/docs/en/commands · developers.openai.com/codex · oh-my-claudecode · oh-my-codex repo.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>18 / 28</span></div></section>
+
+<section class="slide wide" id="s17">
+<div class="s-header"><span class="pg">19 / 28</span><span class="navind" data-i="18"></span></div>
+  <div class="content top">
+    <div class="section-label">에이전트 1:1 · 역할별</div>
+    <h2 class="s-title">에이전트 ① <span class="accent">빌드 · 구현 · 리뷰</span></h2>
+<div class="cmp-wrap"><table class="cmp"><colgroup><col class="col-agrh"><col class="col-agomp"><col class="col-agcmp"><col class="col-agcmpx"></colgroup><thead><tr><th>역할</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr><td class="rh">탐색(읽기)</td><td class="c-omp">explore</td><td><span class="seg"><span class="seg-l">CC</span>Explore(Haiku)</span><span class="seg"><span class="seg-l ext">OMC</span>explore·<wbr>explore-high</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">동적 spawn</span></span><span class="seg"><span class="seg-l ext">OMX</span>explore</span></td></tr><tr><td class="rh">계획</td><td class="c-omp">plan</td><td><span class="seg"><span class="seg-l">CC</span>Plan</span><span class="seg"><span class="seg-l ext">OMC</span>planner·<wbr>analyst</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">plan 모드</span></span><span class="seg"><span class="seg-l ext">OMX</span>planner·<wbr>analyst</span></td></tr><tr><td class="rh">설계 / 아키텍처 자문</td><td class="c-omp">oracle</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>architect(low/<wbr>med/<wbr>high)·<wbr>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>architect·<wbr>critic·<wbr>scholastic</span></td></tr><tr><td class="rh">범용 구현</td><td class="c-omp">task·<wbr>quick_task</td><td><span class="seg"><span class="seg-l">CC</span>general-purpose</span><span class="seg"><span class="seg-l ext">OMC</span>executor(low/<wbr>high)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">동적 spawn</span></span><span class="seg"><span class="seg-l ext">OMX</span>executor·<wbr>team-executor</span></td></tr><tr><td class="rh">코드 리뷰</td><td class="c-omp">reviewer</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-ind">스킬 /<wbr>code-review</span></span><span class="seg"><span class="seg-l ext">OMC</span>code-reviewer·<wbr>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">/<wbr>review</span></span><span class="seg"><span class="seg-l ext">OMX</span>code/<wbr>quality/<wbr>api/<wbr>security/<wbr>performance-reviewer</span></td></tr><tr><td class="rh">보안</td><td class="c-omp"><span class="c-ind">(reviewer)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-ind">스킬 /<wbr>security-review</span></span><span class="seg"><span class="seg-l ext">OMC</span>security-reviewer(low)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>security-reviewer</span></td></tr><tr><td class="rh">디버그 / 추적</td><td class="c-omp"><span class="c-ind">(oracle/<wbr>task)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>debugger·<wbr>tracer</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>debugger</span></td></tr></tbody></table></div>
+    <div class="source-line"><span class="src-k">출처</span> omp 내장문서 EMBEDDED_AGENT_DEFS · code.claude.com/docs/en/sub-agents · oh-my-claudecode · oh-my-codex repo.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>19 / 28</span></div></section>
+
+<section class="slide wide" id="s18">
+<div class="s-header"><span class="pg">20 / 28</span><span class="navind" data-i="19"></span></div>
+  <div class="content top">
+    <div class="section-label">에이전트 1:1 · 역할별</div>
+    <h2 class="s-title">에이전트 ② <span class="accent">도메인 · 제품 · 조정</span></h2>
+<div class="cmp-wrap"><table class="cmp"><colgroup><col class="col-agrh"><col class="col-agomp"><col class="col-agcmp"><col class="col-agcmpx"></colgroup><thead><tr><th>역할</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr><td class="rh">디자인 · UI</td><td class="c-omp">designer</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>designer(low/<wbr>high)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>designer</span></td></tr><tr><td class="rh">프론트엔드 디자인 방법론</td><td class="c-omp">designer (범용)</td><td><span class="seg"><span class="seg-l">CC</span>frontend-design (스킬)</span><span class="seg"><span class="seg-l ext">OMC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$design</span></td></tr><tr><td class="rh">문서 / 외부조사</td><td class="c-omp">librarian</td><td><span class="seg"><span class="seg-l">CC</span>claude-code-guide(Haiku)</span><span class="seg"><span class="seg-l ext">OMC</span>document-specialist·<wbr>writer</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>researcher·<wbr>writer</span></td></tr><tr><td class="rh">테스트 / 검증</td><td class="c-omp"><span class="c-ind">(task)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>test-engineer·<wbr>verifier·<wbr>qa-tester</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>test-engineer·<wbr>verifier·<wbr>qa-tester·<wbr>quality-strategist</span></td></tr><tr><td class="rh">Git / 단순화 / 데이터</td><td class="c-omp"><span class="c-ind">(omp commit)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>git-master·<wbr>code-simplifier·<wbr>scientist</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>git-master·<wbr>code-simplifier·<wbr>build-fixer</span></td></tr><tr><td class="rh">제품 / UX</td><td class="c-omp"><span class="c-x">—</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>product-manager·<wbr>ux-researcher·<wbr>information-architect·<wbr>product-analyst</span></td></tr><tr><td class="rh">시각 분석</td><td class="c-omp"><span class="c-ind">(inspect_image 도구)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>vision</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>vision</span></td></tr><tr><td class="rh">상태줄 설정</td><td class="c-omp"><span class="c-ind">(settings)</span></td><td><span class="seg"><span class="seg-l">CC</span>statusline-setup(Sonnet)</span><span class="seg"><span class="seg-l ext">OMC</span>hud(스킬)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">/<wbr>statusline</span></span><span class="seg"><span class="seg-l ext">OMX</span>$hud</span></td></tr><tr><td class="rh">합의계획 triad</td><td class="c-omp">plan+reviewer+oracle 조합</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>ralplan</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>prometheus-strict(Metis/<wbr>Momus/<wbr>Oracle)</span></td></tr><tr class="em-row"><td class="rh">명명 내장 로스터</td><td class="c-omp">8</td><td><span class="seg"><span class="seg-l">CC</span>5</span><span class="seg"><span class="seg-l ext">OMC</span>19~29</span></td><td><span class="seg"><span class="seg-l">Codex</span>0(동적 spawn)</span><span class="seg"><span class="seg-l ext">OMX</span>37</span></td></tr></tbody></table></div>
+    <div class="emphasis" style="margin-top:14px;">차이는 개수가 아니라 <strong>무엇을 딛고 서나</strong>다 — omp 8종은 <strong>omp 하네스(Hashline·구조화 출력·의미기반 컨텍스트 정리) 위</strong>에서 돌고, OMC·OMX 에이전트는 <strong>호스트(CC·Codex) 하네스에 묶인다.</strong> 확장팩이 호스트 하네스 자체는 바꾸지 못한다.</div>
+    <div class="source-line"><span class="src-k">출처</span> oh-my-pi · oh-my-claudecode(docs/REFERENCE.md) · oh-my-codex(src/agents/definitions.ts). 명명 로스터 수(omp 8 / CC 5 / Codex 0 / OMC 19~29 / OMX 37)는 각 repo 기준 사실.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>20 / 28</span></div></section>
+
+<section class="section-slide" id="s19">
+<div class="s-header"><span class="pg">21 / 28</span><span class="navind" data-i="20"></span></div>
+  <div style="display:flex; flex-direction:column; justify-content:center; flex:1; padding:36px 0;">
+    <div class="big-num">추천 설정</div>
+    <h2 class="section-title" style="margin-top:12px;">추천 설정 —<br><span style="color: var(--purple-deep);">Recommended Settings.</span></h2>
+    <p class="section-sub">① 사용량 한도 표시 · ② 검색 Provider · ③ Advisor · ④ Gemini API 키</p>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>21 / 28</span></div></section>
+
+<section class="slide" id="s20">
+<div class="s-header"><span class="pg">22 / 28</span><span class="navind" data-i="21"></span></div>
+  <div class="content top">
+    <div class="section-label">추천 설정 ① · 사용량 한도 표시</div>
+    <h2 class="s-title">사용량 한도 <span class="accent">표시</span></h2>
+    <p class="body-text" style="margin-bottom:10px;">omp가 보여주는 한도는 두 가지 — <strong>세션 한도(5시간 롤링)</strong>와 <strong>주간 한도(7일)</strong>. 상태줄 <code>usage</code> 바가 둘 다(활성 provider 기준) 표시하고, <code>omp usage</code>로 정확 수치·리셋 시각 확인. (Anthropic 구독 기준)</p>
+    <div class="grid-2" style="gap:28px;">
+      <div>
+        <div class="card" style="margin-bottom:14px;"><div class="card-num">즉석 확인</div><div class="card-body">· <code>/usage</code> — 세션 안에서 바로<br>· <code>omp usage</code> — 모든 인증 계정 자동. 필터: <code>omp usage -p anthropic</code><br>· 추세: <code>omp usage --history --days N</code></div></div>
+        <div class="card"><div class="card-num">상태줄 usage 바</div><div class="card-body"><strong>현재 활성 모델의 provider</strong> 한도를 자동 추적해 표시(세션·주간 둘 다). 전체 계정은 위 명령으로.</div></div>
+      </div>
+      <div>
+        <div class="card"><div class="card-num">~/.omp/agent/config.yml</div>
+<pre class="mono" style="font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; word-break:keep-all; margin-top:4px;">statusLine:
+  preset: custom
+  leftSegments: [model, mode, path, git,
+                 context_pct, cost, usage]
+  rightSegments: [session_name]</pre>
+        </div>
+        <div class="emphasis" style="margin-top:12px;"><strong>주의 ①</strong> <code>preset: custom</code>이어야 커스텀 세그먼트가 적용된다.</div>
+        <div class="emphasis" style="margin-top:10px;"><strong>주의 ②</strong> 세그먼트 id는 <strong>snake_case</strong> — <code>context_pct</code>·<code>session_name</code>·<code>usage</code>. 적용은 omp 재시작.</div>
+      </div>
+    </div>
+    <div class="prompt-box" style="margin-top:16px;">
+      <div class="prompt-label"><span>PROMPT · 직접 고치기 애매하면 그대로 붙여넣기</span><button class="copy-btn" data-target="s20-prompt">복사</button></div>
+<pre class="prompt-body" id="s20-prompt">내 <span class="var">config.yml</span> 상태줄에 <span class="var">usage</span>·<span class="var">context_pct</span>·<span class="var">cost</span> 세그먼트를 추가하고 preset을 <span class="var">custom</span>으로 바꿔줘.</pre>
+    </div>
+    <div class="source-line"><span class="src-k">출처</span> <code>omp usage --help</code>(“for every authenticated account”) · 내장문서 config-usage · <code>~/.omp/agent/config.yml</code>.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>22 / 28</span></div></section>
+
+<section class="slide" id="s21">
+<div class="s-header"><span class="pg">23 / 28</span><span class="navind" data-i="22"></span></div>
+  <div class="content top">
+    <div class="section-label">추천 설정 ② · 검색 Provider</div>
+    <h2 class="s-title">웹검색 — <span class="accent">exa · perplexity</span></h2>
+    <p class="body-text" style="margin-bottom:8px;">omp 웹검색 <strong>14종</strong> 중 <strong>소스가 중요하면 exa</strong> — 키 없이 공개 MCP로 바로 쓰고, <strong>키 발급 시 무료 20,000건/월</strong>(+ 1순위 실패 시 자동폴백 자격). <strong>코딩 에이전트용으로 설계</strong>돼 Cursor도 최신 docs 검색에 쓴다. perplexity는 키 없이 쓰는 <strong>답변형</strong> 보조.</p>
+<div class="cmp-wrap"><table class="cmp"><colgroup><col style="width:15%"><col style="width:42.5%"><col style="width:42.5%"></colgroup><thead><tr><th>구분</th><th>exa ⭐</th><th>perplexity ⭐</th></tr></thead><tbody><tr><td class="rh">성격</td><td>검색·리트리벌 — 관련 소스를 다수 돌려줌</td><td>답변 엔진 — 질문하면 합성 답변 생성</td></tr><tr><td class="rh">키 없이</td><td>✅ 공개 MCP <code>mcp.exa.ai</code></td><td>✅ 익명 모드</td></tr><tr><td class="rh">돌려주는 것</td><td>소스 URL 목록 + 짧은 요약 → <strong>에이전트가 읽고 종합</strong></td><td>완성된 답변 + 출처(citations)</td></tr><tr><td class="rh">언제</td><td>여러 근거를 직접 검토·리서치</td><td>바로 답·요약이 필요할 때</td></tr></tbody></table></div>
+    <p class="body-text" style="margin:10px 0 0; opacity:0.82;">→ 에이전트가 <strong>소스를 직접 읽고 종합</strong>하는 코딩·리서치엔 <strong>exa가 살짝 더 맞다</strong> — 완성 답변에 덜 의존. 즉답·요약이 자주 필요하면 perplexity.</p>
+    <div class="grid-2" style="gap:22px; margin-top:14px;">
+      <div class="card"><div class="card-num">✅ 소스가 주 출력 — 코딩·리서치</div><div class="card-body"><strong>exa</strong> — 키 없이(공개 MCP) + 키 발급 시 <strong>무료 20,000/월</strong>·코딩 특화(Cursor 사용). tavily(무료 1,000/월)·jina(무료 토큰)도 소스형. <strong>brave는 2026초 무료 폐지</strong> · kagi·parallel 등은 유료.</div></div>
+      <div class="card"><div class="card-num">⚠ 답변 우선 — LLM 내장 검색(소스 부차)</div><div class="card-body"><strong>anthropic · codex · gemini</strong> — 모델이 답을 합성하고 소스는 부차. anthropic 관측상 거의 없음 · codex는 답변에서 URL 긁는 폴백 · gemini는 그라운딩 인용은 준다. 출처 중시면 왼쪽.</div></div>
+    </div>
+    <div class="emphasis" style="margin-top:14px;">쓰려면 <strong>콕 집어 설정</strong> — 키 없는 모드는 <strong>명시 선택에서만</strong> 켜진다. <code>omp config set providers.webSearch exa</code>(또는 <code>perplexity</code>) · <code>/settings → 🌐 Providers</code>.</div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>tools/web-search</code> · omp 스킬 <code>omp-pitch</code> §1(키 없이 동작 실증) · 성격 비교 <code>codeables.dev</code>(중립) · <code>exa.ai/pricing</code>(무료 20,000/월·코딩에이전트·Cursor, 2026-06). <span class="src-k">참고</span> 정확도 64.8 vs 60.1 · 지연 1.5s vs 5.1s = <code>exa.ai/versus/perplexity</code>(exa 자사 비교, Thinking Machines 500질의 인용).</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>23 / 28</span></div></section>
+
+<section class="slide" id="sAdvisor">
+<div class="s-header"><span class="pg">24 / 28</span><span class="navind" data-i="23"></span></div>
+  <div class="content top">
+    <div class="section-label">추천 설정 ③ · Advisor</div>
+    <h2 class="s-title">Advisor — <span class="accent">매 턴 지켜보는 2차 모델</span></h2>
+    <p class="body-text" style="margin-bottom:10px;">세션에 붙는 <strong>선택적 2차 모델</strong>. 매 턴이 끝나면 트랜스크립트를 리뷰하고 read-only로 워크스페이스를 살펴 <strong>간결한 조언을 1차 세션에 주입</strong>한다 — 1차 모델이 지나칠 실수·놓친 점을 독립 시점에서 잡아준다.</p>
+    <div class="grid-2" style="gap:28px;">
+      <div>
+        <div class="card"><div class="card-num">켜기</div><div class="card-body">영속: <code>config.yml</code> → <code>advisor.enabled: true</code> · 세션: <code>/advisor</code>(on/off/status/dump) · 시작: <code>--advisor</code>. 쓰는 모델은 <code>modelRoles.advisor</code>로 지정. <strong>전용 단축키는 없다</strong>(액션 ID 미등록).</div></div>
+        <div class="card" style="margin-top:14px;"><div class="card-num">튜닝</div><div class="card-body"><code>advisor.immuneTurns</code>(초반 N턴 면제)·<code>syncBacklog</code>·<code>subagents</code>로 개입 빈도·범위 조절.</div></div>
+      </div>
+      <div>
+        <div class="card"><div class="card-num">효과</div><div class="card-body">도구 오용·사실 오판·누락을 <strong>매 턴 교차검증</strong>해 짚어준다. 1차 세션과 다른 시점이라 자기 점검이 놓치는 걸 잡는다.</div></div>
+        <div class="card" style="margin-top:14px;"><div class="card-num">⚠ 비용 (정직)</div><div class="card-body">매 턴 <strong>2차 모델을 추가 호출</strong> → 그만큼 토큰이 더 든다. “감시 비용을 내고 품질을 산다”는 트레이드오프 — 고위험·장기 작업일수록 가성비가 크다.</div></div>
+      </div>
+    </div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>advisor-watchdog</code> · <code>omp config</code>(<code>advisor.enabled</code>·<code>immuneTurns</code>·<code>syncBacklog</code>·<code>modelRoles.advisor</code>) · CLI <code>--advisor</code>·세션 <code>/advisor</code>. <span class="src-k">주의</span> 2차 모델 토큰 비용 발생.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>24 / 28</span></div></section>
+
+<section class="slide" id="sGemini">
+<div class="s-header"><span class="pg">25 / 28</span><span class="navind" data-i="24"></span></div>
+  <div class="content top">
+    <div class="section-label">추천 설정 ④ · Gemini 본인 API 키</div>
+    <h2 class="s-title">Gemini — <span class="accent">최상위 Pro를 내 쿼터로</span></h2>
+    <p class="body-text" style="margin-bottom:10px;"><code>/setup</code>의 Gemini CLI·Antigravity는 <strong>OAuth(무료 티어)</strong> — 일일 한도·실험 쿼터에 걸린다. 본인 <strong><code>GEMINI_API_KEY</code></strong>를 넣으면 그 캡 없이 <strong>내 쿼터로</strong> 가장 무거운 Pro 모델을 최고 추론 레벨로 쓴다.</p>
+    <div class="grid-2" style="gap:28px;">
+      <div>
+        <div class="card"><div class="card-num">~/.omp/agent/.env · 시작 시 자동 로드</div>
+<pre class="mono" style="font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; word-break:keep-all; margin-top:4px;">GEMINI_API_KEY=AIza…
+# 따옴표·CRLF·공백 금지 (인증 실패 1순위)
+
+$ chmod 600 ~/.omp/agent/.env</pre>
+        </div>
+        <div class="card" style="margin-top:14px;"><div class="card-num">적용</div><div class="card-body">omp 재시작 → <code>/model</code> (<code>Alt+M</code>=기본 고정 · <code>Alt+P</code>=이번 세션만). 화면의 비용 <code>$0.00</code>은 카탈로그 단가가 0이라서지 오류 아님 — 토큰은 정상 기록, 실비용은 구글 콘솔에서 확인.</div></div>
+      </div>
+      <div>
+        <div class="card"><div class="card-num">어떤 모델</div><div class="card-body">코딩은 도구 호출이 잦아 <strong>tool 최적화 변종</strong>이 규격 실수를 줄인다. 현재(2026-06) 예: <code>gemini-3.1-pro-preview-customtools</code> · 범용 <code>gemini-3.1-pro-preview</code> · 안정 대체 <code>gemini-2.5-pro</code>. <strong>모델명은 자주 바뀌니 <code>/model</code> 목록에서 최신 확인.</strong></div></div>
+        <div class="card" style="margin-top:14px;"><div class="card-num">크레딧 여유 시</div><div class="card-body">thinking <strong>High</strong> 상시 · <strong>1M 컨텍스트</strong>로 흩어진 파일을 <code>task</code> 넓게 한 번에 · 도구 실수 잦으면 <code>customtools</code> 변종으로 스왑.</div></div>
+      </div>
+    </div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>environment-variables</code>(<code>~/.omp/agent/.env</code> 자동 로드·<code>GEMINI_API_KEY</code>)·<code>keybindings</code>(<code>Alt+M</code>/<code>Alt+P</code>) · 키 발급 Google AI Studio. <span class="src-k">주의</span> 프리뷰 모델명은 변동 — 위 ID는 현재 기준 예시.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>25 / 28</span></div></section>
+
+<section class="section-slide" id="sSrc">
+<div class="s-header"><span class="pg">26 / 28</span><span class="navind" data-i="25"></span></div>
+  <div style="display:flex; flex-direction:column; justify-content:center; flex:1; padding:36px 0;">
+    <div class="big-num">출처</div>
+    <h2 class="section-title" style="margin-top:12px;">출처 —<br><span style="color: var(--purple-deep);">Sources.</span></h2>
+    <p class="section-sub">claim → 위치 → 정직 태그</p>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>26 / 28</span></div></section>
+
+<section class="slide" id="s22">
+<div class="s-header"><span class="pg">27 / 28</span><span class="navind" data-i="26"></span></div>
+  <div class="content top">
+    <div class="section-label">출처 · claim → 위치 → 정직 태그 (1/2)</div>
+    <h2 class="s-title">출처 <span class="accent">①</span></h2>
+    <div class="src-honesty"><strong>정직 요약</strong> — 저자 자가벤치(Hashline)=공개·재현 가능하나 독립검증 0 · 하네스 중요성 독립근거=Opus CORE×2(제3자) · CC 75%=1인 90일 자가측정 · CC/Codex 이슈·내부 동작=사용자 보고·역공학 gist(공식 인정 아님) · omp 버전=v16.1.9(사용자 환경).</div>
+<div style="font-size:12px; opacity:0.9; margin:4px 0 8px;"><strong>범례</strong> <span style="color:#1d4ed8">■</span>공식·repo  <span style="color:#15803d">■</span>제3자 독립  <span style="color:#c2700a">■</span>저자 자가측정  <span style="color:#c026d3">■</span>사용자·1인 보고  <span style="color:#6b7280">■</span>내장·역공학</div>
+<div class="src-grid"><div class="src-row"><div class="sc-claim"><span class="sc-n">1</span>omp 규모 — 40+ provider · 32 tool · 14 lsp · 28 dap · ~55k Rust</div><div class="sc-loc"><a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noopener">github.com/can1357/oh-my-pi</a> README.md 상단 배지 라인</div><div class="sc-tag" style="color:#c2700a">[자가보고; ~55k=저자 ‘코어’ 표기, 전체 crates ~92k(벤더 포함)]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">2</span>Hashline 벤치(6.7%→68.3% +61.6pp / Grok4Fast −61% / MiniMax 2.1× / 평균 20~30%↓ / 16모델·180과제×3)</div><div class="sc-loc"><a href="https://blog.can.ac/2026/02/12/the-harness-problem/" target="_blank" rel="noopener">blog.can.ac … the-harness-problem</a>(벤치 섹션) · README “Every tool, benchmaxxed” 표 · repo <code>packages/typescript-edit-benchmark/</code>(runner·fixtures.tar.gz·all_models_results.json[6모델]) · <a href="https://news.hada.io/topic?id=26648" target="_blank" rel="noopener">GeekNews #26648</a></div><div class="sc-tag" style="color:#c2700a">[저자 자가벤치; 코드·픽스처·6모델 공개·재현 가능, 16모델×3포맷 전체표는 블로그]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">3</span>Codex apply_patch 실패율(Grok4 50.7% · GLM-4.7 46.2%) · str_replace 완전일치 한계</div><div class="sc-loc"><a href="https://blog.can.ac/2026/02/12/the-harness-problem/" target="_blank" rel="noopener">blog.can.ac … the-harness-problem</a>(편집포맷 비교 섹션)</div><div class="sc-tag" style="color:#c2700a">[저자 측정]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">4</span>하네스가 변수라는 독립 증거 — 같은 Opus, CORE 점수가 Claude Code 하네스로 ~2배</div><div class="sc-loc"><a href="https://x.com/sayashk/status/1996334941832089732" target="_blank" rel="noopener">x.com/sayashk/status/1996334941832089732</a> (HN <a href="https://news.ycombinator.com/item?id=46988596" target="_blank" rel="noopener">#46988596</a> 경유)</div><div class="sc-tag" style="color:#15803d">[제3자 — “잘 설계된 하네스가 맨몸 모델보다 낫다”의 일반 명제]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">5</span>Claude Code 오버헤드 ~75% (CLAUDE.md 4,800tok/턴 · MCP 12×~600 · 훅 등)</div><div class="sc-loc"><a href="https://acdigest.substack.com/p/most-of-your-claude-code-tokens-are" target="_blank" rel="noopener">acdigest … most-of-your-claude-code-tokens-are</a> (Marco Kotrotsos, 90일·~430h 프록시 로그)</div><div class="sc-tag" style="color:#c026d3">[1인 자가측정 — 체계적 연구 아님]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">6</span>CC 토큰 이슈 — system-reminder 6~10배 · 사소 프롬프트 20~30k · CLAUDE.md 캐시 · 시작 오버헤드</div><div class="sc-loc"><a href="https://github.com/anthropics/claude-code/issues/44617" target="_blank" rel="noopener">#44617</a> · <a href="https://github.com/anthropics/claude-code/issues/52979" target="_blank" rel="noopener">#52979</a> · <a href="https://github.com/anthropics/claude-code/issues/24147" target="_blank" rel="noopener">#24147</a> · <a href="https://github.com/anthropics/claude-code/issues/41812" target="_blank" rel="noopener">#41812</a></div><div class="sc-tag" style="color:#c026d3">[사용자 보고 — 공식 인정 아님]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">7</span>Codex 압축/재읽기 — 컨텍스트 자주 차면 토큰 불어남</div><div class="sc-loc"><a href="https://codex.danielvaughan.com/2026/04/14/context-compaction-deep-dive-codex-cli-claude-code-opencode/" target="_blank" rel="noopener">codex.danielvaughan.com … context-compaction-deep-dive</a> [독립 분석] · 개선요청 <a href="https://github.com/openai/codex/issues/16839" target="_blank" rel="noopener">openai/codex #16839</a> (#16812는 not-a-bug 종료)</div><div class="sc-tag" style="color:#15803d">[독립 분석 + 사용자 요청]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">8</span>omp 컨텍스트 3단 + snapcompact</div><div class="sc-loc">내장문서 <code>omp://compaction.md</code> · repo <code>packages/snapcompact/README.md</code>(provider별 frame shape 표) · <code>packages/snapcompact/research/</code>(SQuAD recall 스크립트; 점수표 미공개)</div><div class="sc-tag" style="color:#c2700a">[효과는 저자 자가평가]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">9</span>omp 내장 에이전트 8</div><div class="sc-loc">내장문서 task-agent-discovery (<code>EMBEDDED_AGENT_DEFS</code>: explore·plan·designer·reviewer·librarian·oracle + task·quick_task)</div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div></div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>27 / 28</span></div></section>
+
+<section class="slide" id="s23">
+<div class="s-header"><span class="pg">28 / 28</span><span class="navind" data-i="27"></span></div>
+  <div class="content top">
+    <div class="section-label">출처 · claim → 위치 → 정직 태그 (2/2)</div>
+    <h2 class="s-title">출처 <span class="accent">②</span></h2>
+<div style="font-size:12px; opacity:0.9; margin:4px 0 8px;"><strong>범례</strong> <span style="color:#1d4ed8">■</span>공식·repo  <span style="color:#15803d">■</span>제3자 독립  <span style="color:#c2700a">■</span>저자 자가측정  <span style="color:#c026d3">■</span>사용자·1인 보고  <span style="color:#6b7280">■</span>내장·역공학</div>
+<div class="src-grid"><div class="src-row"><div class="sc-claim"><span class="sc-n">10</span>사용량(모든 계정/활성 provider)</div><div class="sc-loc"><code>omp usage --help</code> (“for every authenticated account”) · 내장문서 config-usage</div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">11</span>단축키</div><div class="sc-loc">내장문서 <code>omp://keybindings.md</code>(액션ID·기본키 표) · 커스텀 <code>~/.omp/agent/keybindings.yml</code></div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">12</span>statusLine (preset:custom · snake_case)</div><div class="sc-loc"><code>~/.omp/agent/config.yml</code> · omp 설정 문서</div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">13</span>CC 내장 에이전트 5</div><div class="sc-loc"><a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">code.claude.com/docs/en/sub-agents</a> (Explore/Plan/general-purpose/statusline-setup/claude-code-guide)</div><div class="sc-tag" style="color:#1d4ed8">[공식 문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">14</span>CC 슬래시 세트</div><div class="sc-loc"><a href="https://code.claude.com/docs/en/commands" target="_blank" rel="noopener">code.claude.com/docs/en/commands</a> (2026-06; 버전마다 변동)</div><div class="sc-tag" style="color:#1d4ed8">[공식 문서; 버전 변동]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">15</span>Codex 슬래시·서브에이전트 (명명 로스터 없음·실험)</div><div class="sc-loc"><a href="https://developers.openai.com/codex/cli/slash-commands" target="_blank" rel="noopener">developers.openai.com/codex/cli/slash-commands</a> · repo <code>codex-rs/tui/src/slash_command.rs</code> · <code>codex-rs/core/src/tools/handlers/multi_agents_spec.rs</code></div><div class="sc-tag" style="color:#1d4ed8">[공식 문서 + repo]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">16</span>OMC — 28 commands · 38 skills · 19~29 agents</div><div class="sc-loc"><a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noopener">github.com/Yeachan-Heo/oh-my-claudecode</a> (npm oh-my-claude-sisyphus) · <code>docs/REFERENCE.md</code></div><div class="sc-tag" style="color:#1d4ed8">[확장팩 repo]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">17</span>OMX — 44 skills · 37 agents</div><div class="sc-loc"><a href="https://github.com/Yeachan-Heo/oh-my-codex" target="_blank" rel="noopener">github.com/Yeachan-Heo/oh-my-codex</a> (npm oh-my-codex) · <code>src/agents/definitions.ts</code></div><div class="sc-tag" style="color:#1d4ed8">[확장팩 repo]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">18</span>검색 provider 14 · exa 키 없음</div><div class="sc-loc">omp 스킬 <code>~/.omp/agent/skills/omp-pitch/SKILL.md</code> · 웹검색 설정 <code>providers.webSearch</code></div><div class="sc-tag" style="color:#c2700a">[저자 스킬·직접 증명]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">19</span>CC microcompact · Codex trim · CC promotion 미구현 (S8 검증)</div><div class="sc-loc">claude-code 역공학 gist · <a href="https://github.com/openai/codex" target="_blank" rel="noopener">openai/codex</a> <code>codex-rs/core/src/compact_remote*.rs</code> · CC promotion <a href="https://github.com/anthropics/claude-code/issues/23920" target="_blank" rel="noopener">#23920</a></div><div class="sc-tag" style="color:#6b7280">[CC 내부=역공학 gist 기반]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">20</span>frontend-design 스킬 (번들 디자인)</div><div class="sc-loc"><a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener">github.com/anthropics/claude-code</a> <code>plugins/frontend-design/</code></div><div class="sc-tag" style="color:#1d4ed8">[공식 plugin 스킬]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">21</span>OMX 제품 레인 (product-manager·ux-researcher·information-architect)</div><div class="sc-loc"><a href="https://github.com/Yeachan-Heo/oh-my-codex" target="_blank" rel="noopener">github.com/Yeachan-Heo/oh-my-codex</a> <code>src/agents/definitions.ts</code></div><div class="sc-tag" style="color:#1d4ed8">[확장팩 repo]</div></div></div>
+    <div class="source-line"><span class="src-k">출처 종합</span> 위 항목들은 공개 URL·repo 경로·내장문서 기준. 클릭 시 원문으로 이동한다.</div>
+  </div>
+<div class="s-footer"><span>omp 소개</span><span>28 / 28</span></div></section>
+
+<div class="nav-toast" id="nav-toast">방향키 · 마우스 휠 · 스와이프 — 한 장씩 넘기기 가능</div>
+
+<script>
+const slides = document.querySelectorAll('section');
+const progressBar = document.getElementById('progress-bar');
+let currentIndex = 0;
+
+function updateProgress() {
+  const pct = ((currentIndex + 1) / slides.length) * 100;
+  if (progressBar) progressBar.style.width = pct + '%';
+}
+
+let animLock = false;
+function playEnter(idx) {
+  const s = slides[idx];
+  s.classList.remove('sl-anim');
+  void s.offsetWidth;
+  s.classList.add('sl-anim');
+}
+function goTo(idx) {
+  if (idx < 0 || idx >= slides.length || idx === currentIndex || animLock) return;
+  animLock = true;
+  const from = slides[currentIndex];
+  currentIndex = idx;
+  updateProgress();
+  if(window.__rollNav)window.__rollNav(idx);
+  from.classList.remove('sl-anim');
+  from.classList.add('sl-leaving');
+  setTimeout(() => {
+    window.scrollTo({ top: slides[idx].offsetTop, left: 0, behavior: 'instant' });
+    from.classList.remove('sl-leaving');
+    playEnter(idx);
+    setTimeout(() => { animLock = false; }, 90);
+  }, 150);
+}
+function next() { goTo(Math.min(slides.length - 1, currentIndex + 1)); }
+function prev() { goTo(Math.max(0, currentIndex - 1)); }
+
+let scrollTimer;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(() => {
+    const y = window.scrollY + window.innerHeight / 2;
+    let best = 0;
+    slides.forEach((s, i) => { if (s.offsetTop <= y) best = i; });
+    currentIndex = best;
+    updateProgress();
+    if(window.__rollNav)window.__rollNav(best);
+  }, 80);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
+    e.preventDefault(); next();
+  } else if (['ArrowUp', 'PageUp'].includes(e.key)) {
+    e.preventDefault(); prev();
+  } else if (e.key === 'Home') {
+    e.preventDefault(); goTo(0);
+  } else if (e.key === 'End') {
+    e.preventDefault(); goTo(slides.length - 1);
+  }
+});
+
+let wheelLock = false;
+window.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  if (wheelLock) return;
+  wheelLock = true;
+  if (e.deltaY > 20) next();
+  else if (e.deltaY < -20) prev();
+  setTimeout(() => { wheelLock = false; }, 700);
+}, { passive: false });
+
+let touchStartY = 0;
+window.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+window.addEventListener('touchend', (e) => {
+  const dy = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dy) > 50) {
+    if (dy > 0) next();
+    else prev();
+  }
+}, { passive: true });
+
+updateProgress();
+
+setTimeout(() => {
+  const toast = document.getElementById('nav-toast');
+  if (toast) toast.classList.add('hidden');
+}, 3000);
+</script>
+
+<script>
+(function(){
+var titles = ["표지", "목차", "시작하기", "외부 설정 흡수 (참고)", "omp가 (기본) 안 가진 것", "하네스 & 토큰 오버헤드", "OMP는 무엇이 다른가", "상세① Hashline", "상세② 도구 하네스", "상세③ IDE·디버거", "상세④ 컨텍스트 관리", "상세⑤ 멀티프로바이더", "단축키 모음", "슬래시① 세션·브랜치", "슬래시② 컨텍스트·모델", "슬래시③ 계획·리뷰", "슬래시④ 멀티모델·메모리·플러그인", "슬래시⑤ 진단·설정", "에이전트① 빌드·구현·리뷰", "에이전트② 도메인·제품·조정", "추천 설정", "추천 설정① 사용량 한도 표시", "추천 설정② 검색 Provider", "추천 설정③ Advisor", "추천 설정④ Gemini API 키", "출처", "출처①", "출처②"];
+var menuEntries = [['cat','인트로'],0,1,['cat','본문 · 왜 omp인가'],2,3,4,5,6,7,8,9,10,11,12,['cat','비교 · 1:1'],['슬래시 명령어',13],['에이전트',18],['cat','추천 설정'],['추천 설정',20],['cat','출처'],['출처',25]];
+var menu=document.createElement('div'); menu.id='slide-menu';
+var tmr;
+function show(){ clearTimeout(tmr); menu.classList.add('open'); }
+function hide(){ menu.classList.remove('open'); }
+function later(){ tmr=setTimeout(hide, 260); }
+menuEntries.forEach(function(e){
+  if(Array.isArray(e) && e[0]==='cat'){ var c=document.createElement('div'); c.className='sm-cat'; c.textContent=e[1]; menu.appendChild(c); return; }
+  var gi, label; if(Array.isArray(e)){ label=e[0]; gi=e[1]; } else { gi=e; label=titles[e]; }
+  var it=document.createElement('div'); it.className='sm-item';
+  var n=document.createElement('span'); n.className='sm-n'; n.textContent=('0'+(gi+1)).slice(-2);
+  var tx=document.createElement('span'); tx.className='sm-t'; tx.textContent=label;
+  it.appendChild(n); it.appendChild(tx);
+  it.addEventListener('click', function(){ hide(); if(typeof goTo==='function'){ goTo(gi); } });
+  menu.appendChild(it);
+});
+document.body.appendChild(menu);
+menu.addEventListener('mouseenter', show);
+menu.addEventListener('mouseleave', later);
+var navroll=document.createElement('div'); navroll.id='navroll'; document.body.appendChild(navroll);
+navroll.addEventListener('mouseenter', show); navroll.addEventListener('mouseleave', later);
+var navLines={}, _lastNav=-1;
+function nrCls(o){ var a=o<0?-o:o; return a===0?'o0':(a===1?'o1':'o2'); }
+function renderNav(cur){
+  if(cur===_lastNav) return; _lastNav=cur;
+  for(var i=cur-2;i<=cur+2;i++){
+    if(i<0||i>=titles.length||navLines[i]) continue;
+    var el=document.createElement('div'); el.className='nr-line '+nrCls(i-cur); el.textContent=titles[i];
+    el.style.transition='none'; el.style.setProperty('--o', i-cur);
+    navroll.appendChild(el); navLines[i]=el; void el.offsetWidth; el.style.transition='';
+  }
+  Object.keys(navLines).forEach(function(k){
+    var i=+k, o=i-cur, el=navLines[i];
+    el.style.setProperty('--o', o); el.className='nr-line '+nrCls(o);
+    if(o<-2||o>2){ delete navLines[i]; setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 540); }
+  });
+  navroll.classList.toggle('on-dark', !!(slides[cur] && slides[cur].classList.contains('dark')));
+}
+window.__rollNav=renderNav; renderNav(0);
+document.querySelectorAll('[data-goto]').forEach(function(el){
+  el.addEventListener('click', function(){ var i=parseInt(el.getAttribute('data-goto'),10); if(typeof goTo==='function'){ goTo(i); } });
+});
+document.querySelectorAll('.copy-btn').forEach(function(b){
+  var orig=b.textContent;
+  b.addEventListener('click', function(){
+    var el=document.getElementById(b.getAttribute('data-target'));
+    var txt=el?el.textContent:'';
+    function done(){ b.textContent='복사됨'; b.classList.add('copied'); setTimeout(function(){ b.textContent=orig; b.classList.remove('copied'); }, 1500); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(done); } else { done(); }
+  });
+});
+})();
+</script>
+
+</body>
+</html>
