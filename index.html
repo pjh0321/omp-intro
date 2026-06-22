@@ -1144,7 +1144,7 @@ skills:
       <div class="ev"><div class="ev-n">1</div><div class="ev-b"><strong>Hashline 편집 포맷</strong> — 하네스 본체 — OMC·OMX 확장팩으로 이식 불가(호스트 하네스 교체 필요).</div></div>
       <div class="ev"><div class="ev-n">2</div><div class="ev-b"><strong>네이티브 멀티프로바이더(한 세션 40+)</strong> — CC=Anthropic·Codex=OpenAI 고정, OMC·OMX는 다른 CLI로 셸아웃. omp는 한 세션서 교체.</div></div>
       <div class="ev"><div class="ev-n">3</div><div class="ev-b"><strong>구조화 서브에이전트 출력</strong>(raw JSONL 아님) — 하네스 레벨.</div></div>
-      <div class="ev"><div class="ev-n">4</div><div class="ev-b"><strong>컨텍스트 관리 — 의미 기반 무의미결과 제거 + snapcompact(16.1.8부터 기본)</strong> — 문서상 동등 기능 못 찾음 (뒤 ‘컨텍스트 관리’ 상세에서 근거).</div></div>
+      <div class="ev"><div class="ev-n">4</div><div class="ev-b"><strong>컨텍스트 관리 — 의미 기반 무의미결과 제거</strong> — 문서상 동등 기능 못 찾음. (snapcompact 이미지 압축도 구조상 고유하나 한글 본문 많은 세션엔 비활성 → 상세 ④.)</div></div>
     </div>
     <div class="ab-label b"><span class="ab-tag">B</span> 편의 차이 — 바로 되느냐 vs 세팅하느냐</div>
 <div class="cmp-wrap"><table class="cmp"><colgroup><col class="col-rh4"><col class="col-omp4"><col class="col-ccx4"></colgroup><thead><tr><th>항목</th><th class="c-omp">omp · 코어 내장</th><th>Claude Code · Codex · 연동/확장</th></tr></thead><tbody><tr><td class="rh">LSP · DAP</td><td class="c-omp">코어 내장 → 세팅 0</td><td>IDE 연동(/<wbr>ide)·<wbr>외부 의존; DAP는 bash 우회</td></tr><tr><td class="rh">ripgrep · glob 검색</td><td class="c-omp">네이티브 내장</td><td>검색 도구는 있음 — 체감차</td></tr><tr><td class="rh">에이전트 로스터 · 상호운용 · 관측성</td><td class="c-omp">기본 제공</td><td>확장팩·<wbr>설정으로 가능</td></tr><tr><td class="rh">격리 프로필</td><td class="c-omp"><code>--profile</code>·<code>--alias</code> 내장 (인증·세션·설정 완전 격리)</td><td>CC 네이티브 없음(<code>CLAUDE_CONFIG_DIR</code> 우회)·Codex는 config 프리셋만</td></tr></tbody></table></div>
@@ -1201,13 +1201,14 @@ skills:
   <div class="content top">
     <div class="section-label">상세 ④ · 컨텍스트 관리 (정직)</div>
     <h2 class="s-title">컨텍스트 <span class="accent">관리</span></h2>
-    <p class="body-text" style="margin-bottom:10px;">솔직히 — omp 압축은 <strong>① 더 큰 컨텍스트 모델로 승격 · ② 무의미·과대 출력 정리 · ③ LLM 요약</strong> 3단계인데, <strong>대부분 CC·Codex와 비슷하다.</strong> omp 고유로 단언할 수 있는 건 둘뿐.</p>
-    <div class="grid-2">
+    <p class="body-text" style="margin-bottom:10px;">솔직히 — omp 압축은 <strong>① 더 큰 컨텍스트 모델로 승격 · ② 무의미·과대 출력 정리 · ③ LLM 요약</strong> 3단계인데, <strong>대부분 CC·Codex와 비슷하다.</strong> omp 고유는 둘 — 하나(의미 필터)는 견고, 하나(snapcompact)는 한글 세션엔 조건부.</p>
+    <div class="grid-3">
       <div class="card"><div class="card-num">공통 — 차별 아님</div><div class="card-body">· <strong>③ LLM 요약</strong> = Claude Code와 사실상 동일 (Codex는 서버측 blob)<br>· <strong>② 크기·오래된 출력 정리</strong>(오래된·큰 것부터 지움)도 CC(microcompact)·Codex(trim)가 함</div></div>
-      <div class="card purple"><div class="card-num">omp 고유 — 단 2개</div><div class="card-body">· <strong>의미 기반 무의미결과 제거</strong> — 0건 검색·타임아웃·빈 결과를 <code>[Uneventful result elided]</code>로(<code>compaction.dropUseless</code>). CC·Codex는 (공개 문서 기준) 크기·최신성 위주 — 동등한 의미 필터는 확인 못 함. 비울 때도 <strong>캐시 인지</strong> — 잔여 컨텍스트가 작거나 캐시 만료 뒤에만 지워, 살아있는 prompt cache를 불필요하게 깨지 않는다.<br>· <strong>snapcompact</strong> — 버릴 대화를 이미지로(비전·결정적, 16.1.8부터 기본 압축; 비전 불가·예산 초과 시 LLM 요약 폴백).</div></div>
+      <div class="card purple"><div class="card-num">omp 고유 ① · 견고</div><div class="card-body"><strong>의미 기반 무의미결과 제거</strong> — 0건·타임아웃·빈 결과를 <code>[Uneventful result elided]</code>로(<code>dropUseless</code>). CC·Codex는 (공개 문서 기준) 크기·최신성 위주 — 동등한 의미 필터 확인 못 함. 비울 때도 <strong>캐시 인지</strong>(잔여 작거나 캐시 만료 후에만).</div></div>
+      <div class="card purple"><div class="card-num">omp 고유 ② · 조건부(약함)</div><div class="card-body"><strong>snapcompact</strong> — 버릴 대화를 이미지로(비전·결정적, 16.1.8부터 기본). 단 <strong>렌더 불가(한글 등) &gt;5%면 비활성→LLM 요약 폴백</strong>(세션 원문은 보존하나 모델 입력 맥락은 요약본→세부 누락 가능). 코드·영어 세션 적용, <strong>한글 본문 세션 미적용</strong>.</div></div>
     </div>
     <div class="emphasis" style="margin-top:12px;"><strong>① promotion</strong>(더 큰 컨텍스트 모델로 먼저 갈아타기)는 omp 고유지만, 이미 <strong>최대 컨텍스트 모델을 쓰면 실효성이 낮다</strong>.</div>
-    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>compaction.md</code>(dropUseless·pruneSupersededToolResults·snapcompact; 16.1.8부터 기본) · CompactionAudit(CC microcompact <code>Rg()</code>·Codex <code>trim_function_call_history</code>·<code>/v1/responses/compact</code> blob · CC promotion 미구현 #23920).</div>
+    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>compaction.md</code>(dropUseless·pruneSupersededToolResults·snapcompact; 16.1.8부터 기본) · CompactionAudit(CC microcompact <code>Rg()</code>·Codex <code>trim_function_call_history</code>·<code>/v1/responses/compact</code> blob · CC promotion 미구현 #23920) · snapcompact 안전기준 <code>unrenderableRatio ≤ 0.05</code>(초과 시 비활성; 번들 safety check) — 이 세션 7.67%로 폴백 관측(omp 로그).</div>
   </div>
 <div class="s-footer"><span>omp 소개</span><span>11 / 28</span></div></section>
 
