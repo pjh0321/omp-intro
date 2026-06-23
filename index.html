@@ -810,7 +810,6 @@ h3 {
   transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
 /* ===== v2 additions — 3-way comparison rebuild (omp / Claude Code+OMC / Codex+OMX) ===== */
 
 /* Caveat footnote */
@@ -870,7 +869,6 @@ h3 {
   .cmp thead th, .cmp td { padding: 5px 9px; font-size: 10px; }
   .cmp td.rh { font-size: 11px; }
 }
-
 
 /* ===== v4 additions — 21-slide rework (per-capability slash, 3-line hover, copy, sources) ===== */
 
@@ -982,7 +980,6 @@ h3 {
 .cmp.keys td.k-key { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--purple-deep); font-size:12px; }
 .cmp.keys td.k-id { font-family:'JetBrains Mono',monospace; color:var(--ink-mute); font-size:10.5px; }
 
-
 /* ===== v5 additions — 23-slide (bigger nav, S4 A/B, honest S8, S10 gaps, provider table) ===== */
 
 /* bigger 3-line nav: current clearly larger than neighbors */
@@ -1034,7 +1031,7 @@ section.sl-leaving > *:not(.s-header):not(.s-footer) { transition: opacity .15s 
 <div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div>
 
 <section class="cover" id="s1">
-<div class="s-header"><span class="pg">1 / 28</span><span class="navind" data-i="0"></span></div>
+<div class="s-header"><span class="pg">1 / 26</span><span class="navind" data-i="0"></span></div>
   <div style="margin-top: 88px; position: relative; z-index: 1;">
     <div class="cover-meta">OMP (OH-MY-PI) · 터미널 코딩 에이전트</div>
     <h1 class="cover-title" style="margin-top: 22px;">Claude Code · Codex를 쓰던 우리가<br><span class="accent">omp로 옮겨타야 할 이유.</span></h1>
@@ -1045,19 +1042,19 @@ section.sl-leaving > *:not(.s-header):not(.s-footer) { transition: opacity .15s 
 </section>
 
 <section class="slide" id="s2">
-<div class="s-header"><span class="pg">2 / 28</span><span class="navind" data-i="1"></span></div>
+<div class="s-header"><span class="pg">2 / 26</span><span class="navind" data-i="1"></span></div>
   <div class="content top">
     <div class="toc-big"><span class="accent">목차</span></div>
     <div class="toc-grid">
-      <div class="toc-col"><h4>본문 · 왜 omp인가</h4><div class="toc-item" data-goto="2"><span class="toc-n">03</span><span class="toc-t">시작하기</span></div><div class="toc-item" data-goto="3"><span class="toc-n">04</span><span class="toc-t">외부 설정 흡수 (참고)</span></div><div class="toc-item" data-goto="4"><span class="toc-n">05</span><span class="toc-t">omp가 안 가진 것</span></div><div class="toc-item" data-goto="5"><span class="toc-n">06</span><span class="toc-t">하네스 & 오버헤드</span></div><div class="toc-item" data-goto="6"><span class="toc-n">07</span><span class="toc-t">OMP는 무엇이 다른가</span></div><div class="toc-item" data-goto="7"><span class="toc-n">08</span><span class="toc-t">상세① Hashline</span></div><div class="toc-item" data-goto="8"><span class="toc-n">09</span><span class="toc-t">상세② 도구 하네스</span></div><div class="toc-item" data-goto="9"><span class="toc-n">10</span><span class="toc-t">상세③ IDE·디버거</span></div><div class="toc-item" data-goto="10"><span class="toc-n">11</span><span class="toc-t">상세④ 컨텍스트 관리</span></div><div class="toc-item" data-goto="11"><span class="toc-n">12</span><span class="toc-t">상세⑤ 멀티프로바이더</span></div><div class="toc-item" data-goto="12"><span class="toc-n">13</span><span class="toc-t">단축키 모음</span></div></div>
-      <div class="toc-col"><h4>비교 · 1:1</h4><div class="toc-item" data-goto="13"><span class="toc-n">14</span><span class="toc-t">슬래시① 세션·브랜치</span></div><div class="toc-item" data-goto="14"><span class="toc-n">15</span><span class="toc-t">슬래시② 컨텍스트·모델</span></div><div class="toc-item" data-goto="15"><span class="toc-n">16</span><span class="toc-t">슬래시③ 계획·리뷰</span></div><div class="toc-item" data-goto="16"><span class="toc-n">17</span><span class="toc-t">슬래시④ 멀티모델·메모리·플러그인</span></div><div class="toc-item" data-goto="17"><span class="toc-n">18</span><span class="toc-t">슬래시⑤ 진단·설정</span></div><div class="toc-item" data-goto="18"><span class="toc-n">19</span><span class="toc-t">에이전트① 빌드·구현·리뷰</span></div><div class="toc-item" data-goto="19"><span class="toc-n">20</span><span class="toc-t">에이전트② 도메인·제품·조정</span></div></div>
-      <div class="toc-col"><h4>추천 설정 · 출처</h4><div class="toc-item" data-goto="20"><span class="toc-n">21</span><span class="toc-t">추천 설정</span></div><div class="toc-item" data-goto="21"><span class="toc-n">22</span><span class="toc-t">추천 설정① 사용량 한도 표시</span></div><div class="toc-item" data-goto="22"><span class="toc-n">23</span><span class="toc-t">추천 설정② 검색 Provider</span></div><div class="toc-item" data-goto="23"><span class="toc-n">24</span><span class="toc-t">추천 설정③ Advisor</span></div><div class="toc-item" data-goto="24"><span class="toc-n">25</span><span class="toc-t">추천 설정④ Gemini API 키</span></div><div class="toc-item" data-goto="25"><span class="toc-n">26</span><span class="toc-t">출처</span></div><div class="toc-item" data-goto="26"><span class="toc-n">27</span><span class="toc-t">출처①</span></div><div class="toc-item" data-goto="27"><span class="toc-n">28</span><span class="toc-t">출처②</span></div></div>
+      <div class="toc-col"><h4>본문 · 왜 omp인가</h4><div class="toc-item" data-goto="2"><span class="toc-n">03</span><span class="toc-t">시작하기</span></div><div class="toc-item" data-goto="3"><span class="toc-n">04</span><span class="toc-t">하네스 & 오버헤드</span></div><div class="toc-item" data-goto="4"><span class="toc-n">05</span><span class="toc-t">OMP는 무엇이 다른가</span></div><div class="toc-item" data-goto="5"><span class="toc-n">06</span><span class="toc-t">상세① Hashline</span></div><div class="toc-item" data-goto="6"><span class="toc-n">07</span><span class="toc-t">상세② 도구 하네스</span></div><div class="toc-item" data-goto="7"><span class="toc-n">08</span><span class="toc-t">상세③ IDE·디버거</span></div><div class="toc-item" data-goto="8"><span class="toc-n">09</span><span class="toc-t">상세④ 컨텍스트 관리</span></div><div class="toc-item" data-goto="9"><span class="toc-n">10</span><span class="toc-t">상세⑤ 멀티프로바이더</span></div><div class="toc-item" data-goto="10"><span class="toc-n">11</span><span class="toc-t">단축키 모음</span></div></div>
+      <div class="toc-col"><h4>비교 · 1:1</h4><div class="toc-item" data-goto="11"><span class="toc-n">12</span><span class="toc-t">슬래시① 세션·브랜치</span></div><div class="toc-item" data-goto="12"><span class="toc-n">13</span><span class="toc-t">슬래시② 컨텍스트·모델</span></div><div class="toc-item" data-goto="13"><span class="toc-n">14</span><span class="toc-t">슬래시③ 계획·리뷰</span></div><div class="toc-item" data-goto="14"><span class="toc-n">15</span><span class="toc-t">슬래시④ 멀티모델·메모리·플러그인</span></div><div class="toc-item" data-goto="15"><span class="toc-n">16</span><span class="toc-t">슬래시⑤ 진단·설정</span></div><div class="toc-item" data-goto="16"><span class="toc-n">17</span><span class="toc-t">에이전트① 빌드·구현·리뷰</span></div><div class="toc-item" data-goto="17"><span class="toc-n">18</span><span class="toc-t">에이전트② 도메인·제품·조정</span></div></div>
+      <div class="toc-col"><h4>추천 설정 · 출처</h4><div class="toc-item" data-goto="18"><span class="toc-n">19</span><span class="toc-t">추천 설정</span></div><div class="toc-item" data-goto="19"><span class="toc-n">20</span><span class="toc-t">추천 설정① 사용량 한도 표시</span></div><div class="toc-item" data-goto="20"><span class="toc-n">21</span><span class="toc-t">추천 설정② 검색 Provider</span></div><div class="toc-item" data-goto="21"><span class="toc-n">22</span><span class="toc-t">추천 설정③ Advisor</span></div><div class="toc-item" data-goto="22"><span class="toc-n">23</span><span class="toc-t">추천 설정④ Gemini API 키</span></div><div class="toc-item" data-goto="23"><span class="toc-n">24</span><span class="toc-t">출처</span></div><div class="toc-item" data-goto="24"><span class="toc-n">25</span><span class="toc-t">출처①</span></div><div class="toc-item" data-goto="25"><span class="toc-n">26</span><span class="toc-t">출처②</span></div></div>
     </div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>2 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>2 / 26</span></div></section>
 
 <section class="slide" id="sStart">
-<div class="s-header"><span class="pg">3 / 28</span><span class="navind" data-i="2"></span></div>
+<div class="s-header"><span class="pg">3 / 26</span><span class="navind" data-i="2"></span></div>
   <div class="content top">
     <div class="section-label">시작하기 · 기존 환경 그대로</div>
     <h2 class="s-title">시작하기 — <span class="accent">기존 환경 흡수</span></h2>
@@ -1070,57 +1067,13 @@ section.sl-leaving > *:not(.s-header):not(.s-footer) { transition: opacity .15s 
       </div>
     </div>
     <div class="emphasis" style="margin-top:16px;">기존 워크플로를 <strong>버리지 않고 그대로 흡수</strong> → 시도 비용이 거의 0이고 되돌리기 쉽다.</div>
-    <div class="source-line"><span class="src-k">출처</span> omp.sh/install(README) · omp 스킬 omp-pitch §5 · 내장문서 config-usage(우선순위 native 100›claude 80›codex 70›gemini 60).</div>
+    <div class="body-text" style="margin-top:10px; font-size:13.5px; opacity:0.85;">· 흡수가 부담이면(시스템 프롬프트·슬래시 메뉴 비대) omp 안에서 <strong>끌 수 있다</strong> — 필요한 스킬만 <code>~/.omp/agent/skills/</code>에 직접 둔다.<br>· 클라우드·원격·예약·호스티드 통합은 <strong>로컬 전용 구조</strong>라 omp엔 없다(구조적 한계).</div>
+    <div class="source-line"><span class="src-k">출처</span> omp.sh/install(README) · omp 스킬 omp-pitch §5 · 내장문서 config-usage·skills(우선순위 native 100›claude 80›codex 70›gemini 60·흡수 토글) · 로컬 전용 한계=code.claude.com/commands·developers.openai.com/codex.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>3 / 28</span></div></section>
-
-<section class="slide" id="sAbsorb">
-<div class="s-header"><span class="pg">4 / 28</span><span class="navind" data-i="3"></span></div>
-  <div class="content top">
-    <div class="section-label">참고 · 외부 설정 흡수 제어</div>
-    <h2 class="s-title">외부 설정 <span class="accent">흡수 끄기</span></h2>
-    <p class="body-text" style="margin-bottom:10px;">omp는 <code>~/.claude</code>·<code>~/.codex</code>의 슬래시·스킬·훅을 읽어 합친다 — 갈아타기 비용을 낮추는 핵심이다. 다만 <strong>흡수된 스킬 이름·설명이 시스템 프롬프트에 상시 로드, 슬래시 메뉴 비대 등이 신경 쓰여 흡수를 원치 않으면</strong>, omp 안에서 끌 수 있다 — OS 분리·삭제 불필요. 이게 가장 가벼운 해법이다. 단 이 부담은 흡수량에 비례한다 — 적게 깔렸으면 체감은 미미하다.</p>
-    <div class="grid-2" style="gap:28px;">
-      <div>
-        <div class="card"><div class="card-num">~/.omp/agent/config.yml</div>
-<pre class="mono" style="font-size:12.5px; line-height:1.7; color:var(--ink); white-space:pre-wrap; word-break:keep-all; margin-top:4px;">commands:
-  enableClaudeUser: false
-  enableClaudeProject: false
-skills:
-  enableClaudeUser: false
-  enableCodexUser: false
-  enableClaudeProject: false</pre>
-        </div>
-      </div>
-      <div>
-        <div class="card"><div class="card-num">흡수원별 토글</div><div class="card-body">위 <code>enable*</code>를 각각 false로 — 네이티브 스킬은 <code>enablePi*</code>로 유지. <strong>흡수만 골라 끄는 단일 스위치는 없다.</strong> 스킬 전체는 <code>skills.enabled=false</code>·CLI <code>--no-skills</code>로 한 번에(단 네이티브까지 꺼짐). <code>codex</code> 슬래시는 전용 토글이 없어 <code>~/.codex/commands</code>를 비워야 막힌다. <code>/settings</code>에서도 조정.</div></div>
-        <div class="card" style="margin-top:14px;"><div class="card-num">일부만</div><div class="card-body">특정 스킬만 빼기 <code>ignoredSkills</code>(글롭) · 특정만 허용 <code>includeSkills</code>.</div></div>
-      </div>
-    </div>
-    <div class="emphasis" style="margin-top:16px;"><strong>판단</strong> — 흡수는 기본 켜짐이고 그게 덱의 핵심 셀링포인트(이주 편의)다. 끄면 그 이점을 잃으니 <strong>기본값은 켜둔다</strong>. 스킬을 많이 흡수해 시스템 프롬프트·슬래시 메뉴가 무거워졌을 때만 위 토글로 줄이고, 필요한 스킬만 <code>~/.omp/agent/skills/</code>에 직접 둔다.</div>
-    <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>config-usage</code>·<code>skills</code>·<code>slash-command-internals</code>·<code>models</code> · <code>~/.omp/agent/config.yml</code> · <code>omp --help</code>·<code>config list</code>(v16.1.9 실측·16.1.14 재검토). <span class="src-k">주의</span> <code>/extensions</code>는 omp 확장 저작 시스템이지 흡수 토글이 아니다.</div>
-  </div>
-<div class="s-footer"><span>omp 소개</span><span>4 / 28</span></div></section>
-
-<section class="slide" id="s10">
-<div class="s-header"><span class="pg">5 / 28</span><span class="navind" data-i="4"></span></div>
-  <div class="content top">
-    <div class="section-label">정직하게 · omp가 (기본) 안 가진 것</div>
-    <h2 class="s-title">omp가 (기본) <span class="accent">안 가진 것</span></h2>
-    <p class="body-text" style="margin-bottom:10px;">방금 본 대로 기존 환경은 그대로 흡수된다 — 단, <strong>흡수 못 하거나 구조상 없는 것</strong>도 정직하게 짚는다.</p>
-    <div class="grid-3">
-      <div class="card"><div class="card-num">클라우드 · 원격 실행</div><div class="card-body">CC <code>/ultraplan</code>·<code>/autofix-pr</code>·<code>/background</code>·<code>/batch</code>(워크트리 PR), Codex cloud-tasks. → omp는 <strong>로컬 전용</strong>, 클라우드 오케스트레이션 없음.</div></div>
-      <div class="card"><div class="card-num">예약 · 스케줄</div><div class="card-body">CC <code>/schedule</code> — 정해진 시각에 작업 실행. omp에는 없음.</div></div>
-      <div class="card"><div class="card-num">호스티드 통합</div><div class="card-body">CC <code>/chrome</code>·<code>/desktop</code>·<code>/mobile</code>·<code>/remote-control</code>·<code>/teleport</code>·<code>/install-github-app</code>·<code>/install-slack-app</code> → Anthropic 호스티드 생태계.</div></div>
-      <div class="card"><div class="card-num">재미 · 온보딩</div><div class="card-body">CC <code>/insights</code>·<code>/powerup</code>·<code>/radio</code>, Codex <code>/pets</code>·<code>/vim</code>.</div></div><div class="card"><div class="card-num">effort 상한</div><div class="card-body">omp는 사고강도(effort)를 <strong>off~xhigh</strong> 단계로 노출(최상위 xhigh). 코딩엔 이 정도면 충분하고, <strong>Anthropic도 더 깊은 추론은 비용 대비 이득이 작고 overthinking 위험</strong>이라 안내한다. (CC <code>ultracode</code>는 effort 단계가 아니라 omp 밖 하네스 오케스트레이션이라 별개.)</div></div>
-    </div>
-    <div class="emphasis" style="margin-top:16px;">omp가 못 하는 건 <strong>구조(로컬 전용)</strong>에서 온다 — 클라우드·원격·예약·호스티드 통합은 구조상 없다. 반면 <strong>스킬·슬래시·플러그인은 갭이 아니다</strong>: omp가 <code>~/.claude</code>·<code>~/.codex</code>에서 읽어 합친다(단 CC 내장 번들 스킬·<code>.claude/agents</code> 에이전트는 제외). 공개 플러그인 스킬은 <code>SKILL.md</code>만 복사하면 네이티브로 동작.</div>
-    <div class="source-line"><span class="src-k">출처</span> code.claude.com/docs/en/commands · code.claude.com/docs/en/skills(번들=CC 내부) · developers.openai.com/codex · platform.claude.com/docs/en/build-with-claude/effort.</div>
-  </div>
-<div class="s-footer"><span>omp 소개</span><span>5 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>3 / 26</span></div></section>
 
 <section class="slide dark" id="s3">
-<div class="s-header"><span class="pg">6 / 28</span><span class="navind" data-i="5"></span></div>
+<div class="s-header"><span class="pg">4 / 26</span><span class="navind" data-i="3"></span></div>
   <div class="content top">
     <div class="section-label">하네스 &amp; 토큰 오버헤드</div>
     <div class="hero-line">모든 코딩 AI엔 <span class="accent">우리가 못 건드리는 하네스</span>가 있다.<br>같은 모델이라도 그 하네스가 <span class="accent">토큰 소모와 정확도를 가른다.</span></div>
@@ -1132,10 +1085,10 @@ skills:
     </div>
     <div class="source-line"><span class="src-k">출처</span> README 배지(규모) · blog.can.ac/the-harness-problem + repo <code>packages/typescript-edit-benchmark</code> · x.com/sayashk(Opus CORE, HN #46988596) · acdigest(CC ~75%, 90일) · CC 오버헤드/표시 #44617·#52979 · 캐시미스 churn #40652·#48734. <span class="src-k">정직</span> Hashline=저자 자가벤치(독립검증 0) · Opus CORE=제3자 · CC 75%=1인 90일 · CC 이슈=사용자 보고(thinking-block만 Anthropic 확인). 용어: code.claude.com/docs/memory(CLAUDE.md=메모리) · anthropic.com/engineering/effective-harnesses(하네스 정의).</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>6 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>4 / 26</span></div></section>
 
 <section class="slide" id="s4">
-<div class="s-header"><span class="pg">7 / 28</span><span class="navind" data-i="6"></span></div>
+<div class="s-header"><span class="pg">5 / 26</span><span class="navind" data-i="4"></span></div>
   <div class="content top">
     <div class="section-label">강점 비교 · 구조적 vs 편의</div>
     <h2 class="s-title" style="margin-bottom:6px;">OMP는 <span class="accent">무엇이 다른가</span></h2>
@@ -1151,10 +1104,10 @@ skills:
     <div class="emphasis" style="margin-top:14px;">진짜 차이는 <strong>A(구조적)</strong>다. B는 <strong>“바로 되느냐 vs 세팅하느냐”</strong>의 편의 차이일 뿐 — 남들도 연동·확장으로 상당수 가능.</div>
     <div class="source-line"><span class="src-k">출처</span> blog.can.ac/the-harness-problem · oh-my-pi repo · 각 공식 문서. <span class="src-k">정직</span> A만 구조적 강점으로 단언; B는 편의 차이(남도 가능).</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>7 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>5 / 26</span></div></section>
 
 <section class="slide" id="s5">
-<div class="s-header"><span class="pg">8 / 28</span><span class="navind" data-i="7"></span></div>
+<div class="s-header"><span class="pg">6 / 26</span><span class="navind" data-i="5"></span></div>
   <div class="content top">
     <div class="section-label">상세 ① · Hashline 편집</div>
     <h2 class="s-title">Hashline <span class="accent">편집</span></h2>
@@ -1165,10 +1118,10 @@ skills:
     </div>
     <div class="source-line"><span class="src-k">출처</span> blog.can.ac/the-harness-problem(벤치·편집포맷 섹션) · repo <code>packages/typescript-edit-benchmark</code>(runner·fixtures.tar.gz·all_models_results.json[6모델]) · GeekNews #26648. <span class="src-k">정직</span> 저자 자가벤치 — 독립검증 0 · −61%=Grok 4 Fast 출력토큰 한정.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>8 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>6 / 26</span></div></section>
 
 <section class="slide" id="s6">
-<div class="s-header"><span class="pg">9 / 28</span><span class="navind" data-i="8"></span></div>
+<div class="s-header"><span class="pg">7 / 26</span><span class="navind" data-i="6"></span></div>
   <div class="content top">
     <div class="section-label">상세 ② · 도구 하네스</div>
     <h2 class="s-title">도구 <span class="accent">하네스</span></h2>
@@ -1180,10 +1133,10 @@ skills:
     <div class="emphasis" style="margin-top:18px;"><strong>omp 서브에이전트는 스키마 검증 객체만 반환한다</strong> → 토큰 절약(검증 가능). <span style="opacity:0.78;">omp 저자에 따르면 Claude Code는 서브에이전트가 raw JSONL을 흘려 낭비한다(저자 주장).</span></div>
     <div class="source-line"><span class="src-k">출처</span> blog.can.ac/the-harness-problem · oh-my-pi repo. <span class="src-k">정직</span> 서브에이전트 JSONL 낭비는 omp 저자 주장.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>9 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>7 / 26</span></div></section>
 
 <section class="slide" id="s7">
-<div class="s-header"><span class="pg">10 / 28</span><span class="navind" data-i="9"></span></div>
+<div class="s-header"><span class="pg">8 / 26</span><span class="navind" data-i="7"></span></div>
   <div class="content top">
     <div class="section-label">상세 ③ · IDE · 디버거</div>
     <h2 class="s-title">IDE · 디버거 <span class="accent">코어 내장</span></h2>
@@ -1194,10 +1147,10 @@ skills:
     <div class="emphasis" style="margin-top:18px;">정리 — 분류는 '편의'지만 <strong>DAP는 체감 큰 제품 차이</strong> — 경쟁 에이전트엔 구조화 디버거 도구면(브레이크포인트·스텝·변수)이 아예 없다. omp는 클라이언트 코어 내장이라 연동 세팅 0(언어 서버·디버그 어댑터 설치는 도구 공통).</div>
     <div class="source-line"><span class="src-k">출처</span> oh-my-pi repo · 내장문서(tools/lsp · tools/debug).</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>10 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>8 / 26</span></div></section>
 
 <section class="slide" id="s8">
-<div class="s-header"><span class="pg">11 / 28</span><span class="navind" data-i="10"></span></div>
+<div class="s-header"><span class="pg">9 / 26</span><span class="navind" data-i="8"></span></div>
   <div class="content top">
     <div class="section-label">상세 ④ · 컨텍스트 관리 (정직)</div>
     <h2 class="s-title">컨텍스트 <span class="accent">관리</span></h2>
@@ -1210,10 +1163,10 @@ skills:
     <div class="emphasis" style="margin-top:12px;"><strong>승격(promotion)</strong>(더 큰 컨텍스트 모델로 먼저 갈아타기)도 omp 고유지만, 이미 <strong>최대 컨텍스트 모델을 쓰면 실효성이 낮아</strong> 차별점에선 뺐다.</div>
     <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>compaction.md</code>(dropUseless·pruneSupersededToolResults·snapcompact; 16.1.8부터 기본) · CompactionAudit(CC microcompact <code>Rg()</code>·Codex <code>trim_function_call_history</code>·<code>/v1/responses/compact</code> blob · CC promotion 미구현 #23920) · snapcompact 안전기준 <code>unrenderableRatio ≤ 0.05</code>(초과 시 비활성; 번들 safety check) — 이 세션 7.67%로 폴백 관측(omp 로그).</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>11 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>9 / 26</span></div></section>
 
 <section class="slide" id="s9">
-<div class="s-header"><span class="pg">12 / 28</span><span class="navind" data-i="11"></span></div>
+<div class="s-header"><span class="pg">10 / 26</span><span class="navind" data-i="9"></span></div>
   <div class="content top">
     <div class="section-label">상세 ⑤ · 멀티프로바이더</div>
     <h2 class="s-title">네이티브 <span class="accent">멀티프로바이더</span></h2>
@@ -1223,10 +1176,10 @@ skills:
     </div>
     <div class="source-line"><span class="src-k">출처</span> oh-my-pi repo · 내장문서.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>12 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>10 / 26</span></div></section>
 
 <section class="slide" id="s11">
-<div class="s-header"><span class="pg">13 / 28</span><span class="navind" data-i="12"></span></div>
+<div class="s-header"><span class="pg">11 / 26</span><span class="navind" data-i="10"></span></div>
   <div class="content top">
     <div class="section-label">단축키 모음 · 세팅이 아니라 조작</div>
     <h2 class="s-title"><span class="accent">단축키</span> 모음</h2>
@@ -1234,10 +1187,10 @@ skills:
     <div class="emphasis" style="margin-top:14px;">커스텀 — <code>~/.omp/agent/keybindings.yml</code>(액션ID → 키). 현재 활성 바인딩은 세션에서 <code>/hotkeys</code>. 사고강도(Shift+Tab 순환)는 <code>minimal·low·medium·high·xhigh</code> 5단계 — 최상위 xhigh.</div>
     <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>omp://keybindings.md</code>(액션ID·기본키 표) · 커스텀 <code>~/.omp/agent/keybindings.yml</code>.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>13 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>11 / 26</span></div></section>
 
 <section class="slide wide" id="s12">
-<div class="s-header"><span class="pg">14 / 28</span><span class="navind" data-i="13"></span></div>
+<div class="s-header"><span class="pg">12 / 26</span><span class="navind" data-i="11"></span></div>
   <div class="content top">
     <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
     <h2 class="s-title">슬래시 명령어 ① <span class="accent">세션 · 브랜치</span></h2>
@@ -1252,60 +1205,60 @@ skills:
 <div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">세션 · 대화</td></tr><tr><td class="rh">새 세션/대화 비우기</td><td class="c-omp">/<wbr>new·<wbr>/<wbr>fresh</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>clear(alias /<wbr>new,/<wbr>reset)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>new·<wbr>/<wbr>clear</span></td></tr><tr><td class="rh">세션 재개</td><td class="c-omp">/<wbr>resume</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>resume(alias /<wbr>continue)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>resume</span></td></tr><tr><td class="rh">이름 변경</td><td class="c-omp">/<wbr>rename</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>rename</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>rename</span></td></tr><tr><td class="rh">삭제/보관</td><td class="c-omp">/<wbr>drop</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>delete·<wbr>/<wbr>archive</span></td></tr><tr><td class="rh">작업 디렉터리 변경</td><td class="c-omp">/<wbr>move</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>cd·<wbr>/<wbr>add-dir</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">내보내기/복사</td><td class="c-omp">/<wbr>export·<wbr>/<wbr>dump·<wbr>/<wbr>copy</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>export</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>copy·<wbr>/<wbr>raw</span></td></tr><tr><td class="rh">공유 링크</td><td class="c-omp">/<wbr>share</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">실시간 협업</td><td class="c-omp">/<wbr>collab·<wbr>/<wbr>join·<wbr>/<wbr>leave</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>team(tmux)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$team(tmux)</span></td></tr><tr><td class="rh">세션 관리(워크트리)</td><td class="c-omp">/<wbr>session</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>project-session-manager</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr class="grp"><td colspan="4">브랜치 · 되감기</td></tr><tr><td class="rh">분기</td><td class="c-omp">/<wbr>branch</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>branch</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>fork</span></td></tr><tr><td class="rh">포크</td><td class="c-omp">/<wbr>fork</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>fork</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>fork</span></td></tr><tr><td class="rh">세션 트리 탐색</td><td class="c-omp">/<wbr>tree</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">되돌리기 · 재시도</td><td class="c-omp">/<wbr>retry (대화만)</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>rewind (코드+대화)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr></tbody></table></div>
     <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>14 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>12 / 26</span></div></section>
 
 <section class="slide wide" id="s13">
-<div class="s-header"><span class="pg">15 / 28</span><span class="navind" data-i="14"></span></div>
+<div class="s-header"><span class="pg">13 / 26</span><span class="navind" data-i="12"></span></div>
   <div class="content top">
     <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
     <h2 class="s-title">슬래시 명령어 ② <span class="accent">컨텍스트 · 모델/모드</span></h2>
 <div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">컨텍스트 · 압축</td></tr><tr><td class="rh">수동 압축</td><td class="c-omp">/<wbr>compact</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>compact</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>compact</span></td></tr><tr><td class="rh">무거운 내용 버리기</td><td class="c-omp">/<wbr>shake</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">핸드오프(새 세션 인계)</td><td class="c-omp">/<wbr>handoff</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">컨텍스트 사용량 보기</td><td class="c-omp">/<wbr>context</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>context</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>status</span></td></tr><tr><td class="rh">곁가지(임시) 질문</td><td class="c-omp">/<wbr>btw·<wbr>/<wbr>tan</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>btw·<wbr>/<wbr>background</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>side·<wbr>/<wbr>btw</span></td></tr><tr><td class="rh">리캡 요약</td><td class="c-omp">/<wbr>handoff</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>recap</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr class="grp"><td colspan="4">모델 · 모드 · 사고강도</td></tr><tr><td class="rh">모델 전환</td><td class="c-omp">/<wbr>model</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>model</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>model</span></td></tr><tr><td class="rh">임시 모델</td><td class="c-omp">/<wbr>switch(Alt+P)</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">사고강도(effort)</td><td class="c-omp">Shift+Tab 순환</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>effort(low~ultracode)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>model(reasoning)</span></td></tr><tr><td class="rh">빠른 티어</td><td class="c-omp">/<wbr>fast</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>fast</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>fast</span></td></tr><tr><td class="rh">플랜 모드</td><td class="c-omp">/<wbr>plan</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>plan</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>plan</span></td></tr><tr><td class="rh">목표(자율)</td><td class="c-omp">/<wbr>goal·<wbr>/<wbr>guided-goal</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>goal</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>goal</span></td></tr><tr><td class="rh">루프</td><td class="c-omp">/<wbr>loop</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>loop(alias /<wbr>proactive)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">어드바이저(2차 모델)</td><td class="c-omp">/<wbr>advisor</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>advisor</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">도구 강제</td><td class="c-omp">/<wbr>force</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">권한/승인</td><td class="c-omp"><span class="c-ind">(approval mode)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>permissions</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>permissions·<wbr>/<wbr>approve</span></td></tr><tr><td class="rh">성격/톤</td><td class="c-omp"><span class="c-x">—</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>personality</span></td></tr></tbody></table></div>
     <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>15 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>13 / 26</span></div></section>
 
 <section class="slide wide" id="s14">
-<div class="s-header"><span class="pg">16 / 28</span><span class="navind" data-i="15"></span></div>
+<div class="s-header"><span class="pg">14 / 26</span><span class="navind" data-i="13"></span></div>
   <div class="content top">
     <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
     <h2 class="s-title">슬래시 명령어 ③ <span class="accent">계획 · 리뷰</span></h2>
 <div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">계획 · 심층 · 자율</td></tr><tr><td class="rh">딥 인터뷰</td><td class="c-omp">ask/<wbr>plan 에이전트</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>/<wbr>deep-interview</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$deep-interview</span></td></tr><tr><td class="rh">합의 계획</td><td class="c-omp">plan+reviewer+oracle</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>ralplan·<wbr>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ralplan·<wbr>$prometheus-strict</span></td></tr><tr><td class="rh">자율 파이프라인</td><td class="c-omp">/<wbr>goal·<wbr>/<wbr>loop</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>autopilot·<wbr>ralph</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$autopilot·<wbr>$ralph·<wbr>$ultragoal</span></td></tr><tr><td class="rh">울트라플랜/심층리서치</td><td class="c-omp">/<wbr>plan-review·<wbr>/<wbr>tan</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>ultraplan·<wbr>/<wbr>deep-research</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$autoresearch·<wbr>$deepsearch</span></td></tr><tr><td class="rh">병렬 팀 실행</td><td class="c-omp">task fan-out</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>batch</span><span class="seg"><span class="seg-l ext">OMC</span>team·<wbr>ultrawork</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$team·<wbr>$swarm·<wbr>$ultrawork</span></td></tr><tr><td class="rh">클라우드 계획/PR 자동수정/예약</td><td class="c-omp"><span class="c-x">—</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>ultraplan·<wbr>/<wbr>autofix-pr·<wbr>/<wbr>schedule</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr class="grp"><td colspan="4">리뷰 · QA · 검증</td></tr><tr><td class="rh">코드 리뷰</td><td class="c-omp">/<wbr>review+reviewer</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>code-review·<wbr>/<wbr>review</span><span class="seg"><span class="seg-l ext">OMC</span>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>review</span><span class="seg"><span class="seg-l ext">OMX</span>$code-review</span></td></tr><tr><td class="rh">보안 리뷰</td><td class="c-omp">reviewer</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>security-review</span><span class="seg"><span class="seg-l ext">OMC</span>security-reviewer</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$security-review</span></td></tr><tr><td class="rh">단순화/슬롭 정리</td><td class="c-omp">task</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>simplify</span><span class="seg"><span class="seg-l ext">OMC</span>ai-slop-cleaner</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ai-slop-cleaner</span></td></tr><tr><td class="rh">변경 diff</td><td class="c-omp"><span class="c-ind">(read/<wbr>도구)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>diff</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>diff</span></td></tr><tr><td class="rh">실행/검증</td><td class="c-omp">task</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>run·<wbr>/<wbr>verify</span><span class="seg"><span class="seg-l ext">OMC</span>ultraqa</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ultraqa·<wbr>$tdd</span></td></tr><tr><td class="rh">시각 검증</td><td class="c-omp">browser+designer</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>visual-verdict</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$visual-verdict</span></td></tr><tr><td class="rh">프론트엔드 디자인 스킬</td><td class="c-omp"><span class="c-ind">(범용 로더 적재)</span></td><td><span class="seg"><span class="seg-l">CC</span>frontend-design</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$design</span></td></tr></tbody></table></div>
     <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>16 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>14 / 26</span></div></section>
 
 <section class="slide wide" id="s15">
-<div class="s-header"><span class="pg">17 / 28</span><span class="navind" data-i="16"></span></div>
+<div class="s-header"><span class="pg">15 / 26</span><span class="navind" data-i="14"></span></div>
   <div class="content top">
     <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
     <h2 class="s-title">슬래시 명령어 ④ <span class="accent">멀티모델 · 메모리 · 플러그인</span></h2>
 <div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">멀티모델 · 서브에이전트</td></tr><tr><td class="rh">서브에이전트 fan-out</td><td class="c-omp">task+irc</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>agents·<wbr>/<wbr>tasks</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>agent(실험)</span></td></tr><tr><td class="rh">다른 provider 모델 라우팅</td><td class="c-omp">/<wbr>model(네이티브)</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>ask·<wbr>ccg</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$ask·<wbr>$ask-claude·<wbr>$ask-gemini</span></td></tr><tr><td class="rh">백그라운드 작업</td><td class="c-omp">/<wbr>tan·<wbr>/<wbr>jobs</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>background·<wbr>/<wbr>tasks</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>ps·<wbr>/<wbr>stop</span></td></tr><tr class="grp"><td colspan="4">메모리 · 지식</td></tr><tr><td class="rh">메모리</td><td class="c-omp">/<wbr>memory</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>memory</span><span class="seg"><span class="seg-l ext">OMC</span>remember</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>memories</span></td></tr><tr><td class="rh">프로젝트 init</td><td class="c-omp"><span class="c-ind">(자동 흡수)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>init</span><span class="seg"><span class="seg-l ext">OMC</span>deepinit</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>init</span></td></tr><tr><td class="rh">위키/지식</td><td class="c-omp">librarian</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>wiki·<wbr>skillify</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$wiki</span></td></tr><tr><td class="rh">스킬</td><td class="c-omp"><span class="c-ind">(extensions)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>skills·<wbr>/<wbr>reload-skills</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>skills</span><span class="seg"><span class="seg-l ext">OMX</span>$skill</span></td></tr><tr class="grp"><td colspan="4">플러그인 · MCP · 확장</td></tr><tr><td class="rh">MCP</td><td class="c-omp">/<wbr>mcp</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>mcp</span><span class="seg"><span class="seg-l ext">OMC</span>mcp-setup</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>mcp</span></td></tr><tr><td class="rh">플러그인/앱</td><td class="c-omp">/<wbr>plugins·<wbr>/<wbr>marketplace</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>plugin</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>plugins·<wbr>/<wbr>apps</span></td></tr><tr><td class="rh">플러그인 리로드</td><td class="c-omp">/<wbr>reload-plugins</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>reload-plugins</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">IDE 연동</td><td class="c-omp"><span class="c-ind">(LSP 내장)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>ide</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>ide</span></td></tr><tr><td class="rh">파일 첨부</td><td class="c-omp"><span class="c-ind">(read)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>mention</span></td></tr><tr><td class="rh">훅</td><td class="c-omp"><span class="c-ind">(extensions)</span></td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>hooks</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>hooks</span></td></tr><tr><td class="rh">알림 설정</td><td class="c-omp"><span class="c-ind">(extension)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>configure-notifications</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$configure-notifications</span></td></tr><tr><td class="rh">SSH 호스트</td><td class="c-omp">/<wbr>ssh</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr></tbody></table></div>
     <div class="source-line"><span class="src-k">출처</span> 각 도구 공식 문서·CLI · oh-my-claudecode · oh-my-codex repo (2026-06). 확장팩은 <span style="color:var(--purple-deep);">OMC:/OMX:</span> 라벨.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>17 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>15 / 26</span></div></section>
 
 <section class="slide wide" id="s16">
-<div class="s-header"><span class="pg">18 / 28</span><span class="navind" data-i="17"></span></div>
+<div class="s-header"><span class="pg">16 / 26</span><span class="navind" data-i="15"></span></div>
   <div class="content top">
     <div class="section-label">슬래시 명령어 · 한 행 = 한 기능</div>
     <h2 class="s-title">슬래시 명령어 ⑤ <span class="accent">진단 · 설정</span></h2>
 <div class="cmp-wrap"><table class="cmp slash"><colgroup><col class="col-rh4s"><col class="col-omps"><col class="col-d3s"><col class="col-d3s"></colgroup><thead><tr><th>기능</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr class="grp"><td colspan="4">진단 · 사용량 · 설정</td></tr><tr><td class="rh">사용량/비용</td><td class="c-omp">/<wbr>usage·<wbr>omp usage</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>usage(alias /<wbr>cost,/<wbr>stats)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>usage</span></td></tr><tr><td class="rh">상태/통계</td><td class="c-omp">/<wbr>stats·<wbr>/<wbr>jobs</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>status</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>status</span></td></tr><tr><td class="rh">진단</td><td class="c-omp">/<wbr>debug</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>doctor</span><span class="seg"><span class="seg-l ext">OMC</span>omc-doctor</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>debug-config</span><span class="seg"><span class="seg-l ext">OMX</span>$doctor</span></td></tr><tr><td class="rh">도구 목록</td><td class="c-omp">/<wbr>tools</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">설정</td><td class="c-omp">/<wbr>settings·<wbr>/<wbr>setup</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>config(alias /<wbr>settings)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">(config.toml)</span></span></td></tr><tr><td class="rh">상태줄</td><td class="c-omp">/<wbr>settings(statusLine)</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>statusline</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>statusline</span></td></tr><tr><td class="rh">HUD</td><td class="c-omp"><span class="c-ind">(statusLine)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>hud</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>$hud</span></td></tr><tr><td class="rh">단축키 보기/리맵</td><td class="c-omp">/<wbr>hotkeys</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>keybindings</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>keymap·<wbr>/<wbr>vim</span></td></tr><tr><td class="rh">도움말</td><td class="c-omp">/<wbr>help</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>help</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">(help)</span></span></td></tr><tr><td class="rh">로그인/아웃</td><td class="c-omp">/<wbr>login·<wbr>/<wbr>logout</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>login·<wbr>/<wbr>logout</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>logout</span></td></tr><tr><td class="rh">변경알림/업데이트</td><td class="c-omp">/<wbr>changelog·<wbr>omp update</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>release-notes</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">자가개선 규칙</td><td class="c-omp">/<wbr>omfg(TTSR)</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>self-improve</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span></td></tr><tr><td class="rh">종료</td><td class="c-omp">/<wbr>exit·<wbr>/<wbr>quit</td><td><span class="seg"><span class="seg-l">CC</span>/<wbr>exit(alias /<wbr>quit)</span></td><td><span class="seg"><span class="seg-l">Codex</span>/<wbr>quit·<wbr>/<wbr>exit</span></td></tr></tbody></table></div>
     <div class="source-line"><span class="src-k">※</span> OMC는 <code>/oh-my-claudecode:&lt;name&gt;</code>, OMX는 <code>$&lt;name&gt;</code> 접두 · Codex 멀티에이전트는 실험(<code>/experimental</code>) · CC 명령 세트는 버전마다 변동(2026-06). <span class="src-k">출처</span> code.claude.com/docs/en/commands · developers.openai.com/codex · oh-my-claudecode · oh-my-codex repo.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>18 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>16 / 26</span></div></section>
 
 <section class="slide wide" id="s17">
-<div class="s-header"><span class="pg">19 / 28</span><span class="navind" data-i="18"></span></div>
+<div class="s-header"><span class="pg">17 / 26</span><span class="navind" data-i="16"></span></div>
   <div class="content top">
     <div class="section-label">에이전트 1:1 · 역할별</div>
     <h2 class="s-title">에이전트 ① <span class="accent">빌드 · 구현 · 리뷰</span></h2>
 <div class="cmp-wrap"><table class="cmp"><colgroup><col class="col-agrh"><col class="col-agomp"><col class="col-agcmp"><col class="col-agcmpx"></colgroup><thead><tr><th>역할</th><th class="c-omp">omp</th><th>Claude Code + OMC</th><th>Codex + OMX</th></tr></thead><tbody><tr><td class="rh">탐색(읽기)</td><td class="c-omp">explore</td><td><span class="seg"><span class="seg-l">CC</span>Explore(Haiku)</span><span class="seg"><span class="seg-l ext">OMC</span>explore·<wbr>explore-high</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">동적 spawn</span></span><span class="seg"><span class="seg-l ext">OMX</span>explore</span></td></tr><tr><td class="rh">계획</td><td class="c-omp">plan</td><td><span class="seg"><span class="seg-l">CC</span>Plan</span><span class="seg"><span class="seg-l ext">OMC</span>planner·<wbr>analyst</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">plan 모드</span></span><span class="seg"><span class="seg-l ext">OMX</span>planner·<wbr>analyst</span></td></tr><tr><td class="rh">설계 / 아키텍처 자문</td><td class="c-omp">oracle</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>architect(low/<wbr>med/<wbr>high)·<wbr>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>architect·<wbr>critic·<wbr>scholastic</span></td></tr><tr><td class="rh">범용 구현</td><td class="c-omp">task·<wbr>quick_task</td><td><span class="seg"><span class="seg-l">CC</span>general-purpose</span><span class="seg"><span class="seg-l ext">OMC</span>executor(low/<wbr>high)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">동적 spawn</span></span><span class="seg"><span class="seg-l ext">OMX</span>executor·<wbr>team-executor</span></td></tr><tr><td class="rh">코드 리뷰</td><td class="c-omp">reviewer</td><td><span class="seg"><span class="seg-l">CC</span><span class="c-ind">스킬 /<wbr>code-review</span></span><span class="seg"><span class="seg-l ext">OMC</span>code-reviewer·<wbr>critic</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-ind">/<wbr>review</span></span><span class="seg"><span class="seg-l ext">OMX</span>code/<wbr>quality/<wbr>api/<wbr>security/<wbr>performance-reviewer</span></td></tr><tr><td class="rh">보안</td><td class="c-omp"><span class="c-ind">(reviewer)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-ind">스킬 /<wbr>security-review</span></span><span class="seg"><span class="seg-l ext">OMC</span>security-reviewer(low)</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>security-reviewer</span></td></tr><tr><td class="rh">디버그 / 추적</td><td class="c-omp"><span class="c-ind">(oracle/<wbr>task)</span></td><td><span class="seg"><span class="seg-l">CC</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMC</span>debugger·<wbr>tracer</span></td><td><span class="seg"><span class="seg-l">Codex</span><span class="c-x">—</span></span><span class="seg"><span class="seg-l ext">OMX</span>debugger</span></td></tr></tbody></table></div>
     <div class="source-line"><span class="src-k">출처</span> omp 내장문서 EMBEDDED_AGENT_DEFS · code.claude.com/docs/en/sub-agents · oh-my-claudecode · oh-my-codex repo.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>19 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>17 / 26</span></div></section>
 
 <section class="slide wide" id="s18">
-<div class="s-header"><span class="pg">20 / 28</span><span class="navind" data-i="19"></span></div>
+<div class="s-header"><span class="pg">18 / 26</span><span class="navind" data-i="17"></span></div>
   <div class="content top">
     <div class="section-label">에이전트 1:1 · 역할별</div>
     <h2 class="s-title">에이전트 ② <span class="accent">도메인 · 제품 · 조정</span></h2>
@@ -1313,19 +1266,19 @@ skills:
     <div class="emphasis" style="margin-top:14px;">차이는 개수가 아니라 <strong>무엇을 딛고 서나</strong>다 — omp 8종은 <strong>omp 하네스(Hashline·구조화 출력·의미기반 컨텍스트 정리) 위</strong>에서 돌고, OMC·OMX 에이전트는 <strong>호스트(CC·Codex) 하네스에 묶인다.</strong> 확장팩이 호스트 하네스 자체는 바꾸지 못한다.</div>
     <div class="source-line"><span class="src-k">출처</span> oh-my-pi · oh-my-claudecode(docs/REFERENCE.md) · oh-my-codex(src/agents/definitions.ts). 명명 로스터 수(omp 8 / CC 5 / Codex 0 / OMC 19~29 / OMX 37)는 각 repo 기준 사실.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>20 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>18 / 26</span></div></section>
 
 <section class="section-slide" id="s19">
-<div class="s-header"><span class="pg">21 / 28</span><span class="navind" data-i="20"></span></div>
+<div class="s-header"><span class="pg">19 / 26</span><span class="navind" data-i="18"></span></div>
   <div style="display:flex; flex-direction:column; justify-content:center; flex:1; padding:36px 0;">
     <div class="big-num">추천 설정</div>
     <h2 class="section-title" style="margin-top:12px;">추천 설정 —<br><span style="color: var(--purple-deep);">Recommended Settings.</span></h2>
     <p class="section-sub">① 사용량 한도 표시 · ② 검색 Provider · ③ Advisor · ④ Gemini API 키</p>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>21 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>19 / 26</span></div></section>
 
 <section class="slide" id="s20">
-<div class="s-header"><span class="pg">22 / 28</span><span class="navind" data-i="21"></span></div>
+<div class="s-header"><span class="pg">20 / 26</span><span class="navind" data-i="19"></span></div>
   <div class="content top">
     <div class="section-label">추천 설정 ① · 사용량 한도 표시</div>
     <h2 class="s-title">사용량 한도 <span class="accent">표시</span></h2>
@@ -1353,10 +1306,10 @@ skills:
     </div>
     <div class="source-line"><span class="src-k">출처</span> <code>omp usage --help</code>(“for every authenticated account”) · 내장문서 config-usage · <code>~/.omp/agent/config.yml</code>.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>22 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>20 / 26</span></div></section>
 
 <section class="slide" id="s21">
-<div class="s-header"><span class="pg">23 / 28</span><span class="navind" data-i="22"></span></div>
+<div class="s-header"><span class="pg">21 / 26</span><span class="navind" data-i="20"></span></div>
   <div class="content top">
     <div class="section-label">추천 설정 ② · 검색 Provider</div>
     <h2 class="s-title">웹검색 — <span class="accent">exa · perplexity</span></h2>
@@ -1370,10 +1323,10 @@ skills:
     <div class="emphasis" style="margin-top:14px;">쓰려면 <strong>콕 집어 설정</strong> — 키 없는 모드는 <strong>명시 선택에서만</strong> 켜진다. <code>omp config set providers.webSearch exa</code>(또는 <code>perplexity</code>) · <code>/settings → 🌐 Providers</code>.</div>
     <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>tools/web-search</code> · omp 스킬 <code>omp-pitch</code> §1(키 없이 동작 실증) · 성격 비교 <code>codeables.dev</code>(중립) · <code>exa.ai/pricing</code>(무료 20,000/월·코딩에이전트·Cursor, 2026-06). <span class="src-k">참고</span> 정확도 64.8 vs 60.1 · 지연 1.5s vs 5.1s = <code>exa.ai/versus/perplexity</code>(exa 자사 비교, Thinking Machines 500질의 인용).</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>23 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>21 / 26</span></div></section>
 
 <section class="slide" id="sAdvisor">
-<div class="s-header"><span class="pg">24 / 28</span><span class="navind" data-i="23"></span></div>
+<div class="s-header"><span class="pg">22 / 26</span><span class="navind" data-i="21"></span></div>
   <div class="content top">
     <div class="section-label">추천 설정 ③ · Advisor</div>
     <h2 class="s-title">Advisor — <span class="accent">매 턴 지켜보는 2차 모델</span></h2>
@@ -1390,10 +1343,10 @@ skills:
     </div>
     <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>advisor-watchdog</code> · <code>omp config</code>(<code>advisor.enabled</code>·<code>immuneTurns</code>·<code>syncBacklog</code>·<code>modelRoles.advisor</code>) · CLI <code>--advisor</code>·세션 <code>/advisor</code>. <span class="src-k">주의</span> 2차 모델 토큰 비용 발생.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>24 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>22 / 26</span></div></section>
 
 <section class="slide" id="sGemini">
-<div class="s-header"><span class="pg">25 / 28</span><span class="navind" data-i="24"></span></div>
+<div class="s-header"><span class="pg">23 / 26</span><span class="navind" data-i="22"></span></div>
   <div class="content top">
     <div class="section-label">추천 설정 ④ · Gemini 본인 API 키</div>
     <h2 class="s-title">Gemini — <span class="accent">최상위 Pro를 내 쿼터로</span></h2>
@@ -1415,19 +1368,19 @@ $ chmod 600 ~/.omp/agent/.env</pre>
     </div>
     <div class="source-line"><span class="src-k">출처</span> 내장문서 <code>environment-variables</code>(<code>~/.omp/agent/.env</code> 자동 로드·<code>GEMINI_API_KEY</code>)·<code>keybindings</code>(<code>Alt+M</code>/<code>Alt+P</code>) · 키 발급 Google AI Studio. <span class="src-k">주의</span> 프리뷰 모델명은 변동 — 위 ID는 현재 기준 예시.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>25 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>23 / 26</span></div></section>
 
 <section class="section-slide" id="sSrc">
-<div class="s-header"><span class="pg">26 / 28</span><span class="navind" data-i="25"></span></div>
+<div class="s-header"><span class="pg">24 / 26</span><span class="navind" data-i="23"></span></div>
   <div style="display:flex; flex-direction:column; justify-content:center; flex:1; padding:36px 0;">
     <div class="big-num">출처</div>
     <h2 class="section-title" style="margin-top:12px;">출처 —<br><span style="color: var(--purple-deep);">Sources.</span></h2>
     <p class="section-sub">claim → 위치 → 정직 태그</p>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>26 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>24 / 26</span></div></section>
 
 <section class="slide" id="s22">
-<div class="s-header"><span class="pg">27 / 28</span><span class="navind" data-i="26"></span></div>
+<div class="s-header"><span class="pg">25 / 26</span><span class="navind" data-i="24"></span></div>
   <div class="content top">
     <div class="section-label">출처 · claim → 위치 → 정직 태그 (1/2)</div>
     <h2 class="s-title">출처 <span class="accent">①</span></h2>
@@ -1435,10 +1388,10 @@ $ chmod 600 ~/.omp/agent/.env</pre>
 <div style="font-size:12px; opacity:0.9; margin:4px 0 8px;"><strong>범례</strong> <span style="color:#1d4ed8">■</span>공식·repo  <span style="color:#15803d">■</span>제3자 독립  <span style="color:#c2700a">■</span>저자 자가측정  <span style="color:#c026d3">■</span>사용자·1인 보고  <span style="color:#6b7280">■</span>내장·역공학</div>
 <div class="src-grid"><div class="src-row"><div class="sc-claim"><span class="sc-n">1</span>omp 규모 — 40+ provider · 32 tool · 14 lsp · 28 dap · ~55k Rust</div><div class="sc-loc"><a href="https://github.com/can1357/oh-my-pi" target="_blank" rel="noopener">github.com/can1357/oh-my-pi</a> README.md 상단 배지 라인</div><div class="sc-tag" style="color:#c2700a">[자가보고; ~55k=저자 ‘코어’ 표기, 전체 crates ~92k(벤더 포함)]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">2</span>Hashline 벤치(6.7%→68.3% +61.6pp / Grok4Fast −61% / MiniMax 2.1× / 평균 20~30%↓ / 16모델·180과제×3)</div><div class="sc-loc"><a href="https://blog.can.ac/2026/02/12/the-harness-problem/" target="_blank" rel="noopener">blog.can.ac … the-harness-problem</a>(벤치 섹션) · README “Every tool, benchmaxxed” 표 · repo <code>packages/typescript-edit-benchmark/</code>(runner·fixtures.tar.gz·all_models_results.json[6모델]) · <a href="https://news.hada.io/topic?id=26648" target="_blank" rel="noopener">GeekNews #26648</a></div><div class="sc-tag" style="color:#c2700a">[저자 자가벤치; 코드·픽스처·6모델 공개·재현 가능, 16모델×3포맷 전체표는 블로그]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">3</span>Codex apply_patch 실패율(Grok4 50.7% · GLM-4.7 46.2%) · str_replace 완전일치 한계</div><div class="sc-loc"><a href="https://blog.can.ac/2026/02/12/the-harness-problem/" target="_blank" rel="noopener">blog.can.ac … the-harness-problem</a>(편집포맷 비교 섹션)</div><div class="sc-tag" style="color:#c2700a">[저자 측정]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">4</span>하네스가 변수라는 독립 증거 — 같은 Opus, CORE 점수가 Claude Code 하네스로 ~2배</div><div class="sc-loc"><a href="https://x.com/sayashk/status/1996334941832089732" target="_blank" rel="noopener">x.com/sayashk/status/1996334941832089732</a> (HN <a href="https://news.ycombinator.com/item?id=46988596" target="_blank" rel="noopener">#46988596</a> 경유)</div><div class="sc-tag" style="color:#15803d">[제3자 — “잘 설계된 하네스가 맨몸 모델보다 낫다”의 일반 명제]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">5</span>Claude Code 오버헤드 ~75% (CLAUDE.md 4,800tok/턴 · MCP 12×~600 · 훅 등)</div><div class="sc-loc"><a href="https://acdigest.substack.com/p/most-of-your-claude-code-tokens-are" target="_blank" rel="noopener">acdigest … most-of-your-claude-code-tokens-are</a> (Marco Kotrotsos, 90일·~430h 프록시 로그)</div><div class="sc-tag" style="color:#c026d3">[1인 자가측정 — 체계적 연구 아님]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">6</span>CC 토큰 이슈 — system-reminder 6~10배 · 사소 프롬프트 20~30k · CLAUDE.md 캐시 · 시작 오버헤드 · 캐시미스 churn</div><div class="sc-loc"><a href="https://github.com/anthropics/claude-code/issues/44617" target="_blank" rel="noopener">#44617</a> · <a href="https://github.com/anthropics/claude-code/issues/52979" target="_blank" rel="noopener">#52979</a> · <a href="https://github.com/anthropics/claude-code/issues/24147" target="_blank" rel="noopener">#24147</a> · <a href="https://github.com/anthropics/claude-code/issues/41812" target="_blank" rel="noopener">#41812</a> · <a href="https://github.com/anthropics/claude-code/issues/40652" target="_blank" rel="noopener">#40652</a> · <a href="https://github.com/anthropics/claude-code/issues/48734" target="_blank" rel="noopener">#48734</a></div><div class="sc-tag" style="color:#c026d3">[사용자 보고 — 공식 인정 아님]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">7</span>Codex 압축/재읽기 — 컨텍스트 자주 차면 토큰 불어남</div><div class="sc-loc"><a href="https://codex.danielvaughan.com/2026/04/14/context-compaction-deep-dive-codex-cli-claude-code-opencode/" target="_blank" rel="noopener">codex.danielvaughan.com … context-compaction-deep-dive</a> [독립 분석] · 개선요청 <a href="https://github.com/openai/codex/issues/16839" target="_blank" rel="noopener">openai/codex #16839</a> (#16812는 not-a-bug 종료)</div><div class="sc-tag" style="color:#15803d">[독립 분석 + 사용자 요청]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">8</span>omp 컨텍스트 3단 + snapcompact</div><div class="sc-loc">내장문서 <code>omp://compaction.md</code> · repo <code>packages/snapcompact/README.md</code>(provider별 frame shape 표) · <code>packages/snapcompact/research/</code>(SQuAD recall 스크립트; 점수표 미공개)</div><div class="sc-tag" style="color:#c2700a">[효과는 저자 자가평가]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">9</span>omp 내장 에이전트 8</div><div class="sc-loc">내장문서 task-agent-discovery (<code>EMBEDDED_AGENT_DEFS</code>: explore·plan·designer·reviewer·librarian·oracle + task·quick_task)</div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div></div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>27 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>25 / 26</span></div></section>
 
 <section class="slide" id="s23">
-<div class="s-header"><span class="pg">28 / 28</span><span class="navind" data-i="27"></span></div>
+<div class="s-header"><span class="pg">26 / 26</span><span class="navind" data-i="25"></span></div>
   <div class="content top">
     <div class="section-label">출처 · claim → 위치 → 정직 태그 (2/2)</div>
     <h2 class="s-title">출처 <span class="accent">②</span></h2>
@@ -1446,7 +1399,7 @@ $ chmod 600 ~/.omp/agent/.env</pre>
 <div class="src-grid"><div class="src-row"><div class="sc-claim"><span class="sc-n">10</span>사용량(모든 계정/활성 provider)</div><div class="sc-loc"><code>omp usage --help</code> (“for every authenticated account”) · 내장문서 config-usage</div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">11</span>단축키</div><div class="sc-loc">내장문서 <code>omp://keybindings.md</code>(액션ID·기본키 표) · 커스텀 <code>~/.omp/agent/keybindings.yml</code></div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">12</span>statusLine (preset:custom · snake_case)</div><div class="sc-loc"><code>~/.omp/agent/config.yml</code> · omp 설정 문서</div><div class="sc-tag" style="color:#6b7280">[내장문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">13</span>CC 내장 에이전트 5</div><div class="sc-loc"><a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">code.claude.com/docs/en/sub-agents</a> (Explore/Plan/general-purpose/statusline-setup/claude-code-guide)</div><div class="sc-tag" style="color:#1d4ed8">[공식 문서]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">14</span>CC 슬래시 세트</div><div class="sc-loc"><a href="https://code.claude.com/docs/en/commands" target="_blank" rel="noopener">code.claude.com/docs/en/commands</a> (2026-06; 버전마다 변동)</div><div class="sc-tag" style="color:#1d4ed8">[공식 문서; 버전 변동]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">15</span>Codex 슬래시·서브에이전트 (명명 로스터 없음·실험)</div><div class="sc-loc"><a href="https://developers.openai.com/codex/cli/slash-commands" target="_blank" rel="noopener">developers.openai.com/codex/cli/slash-commands</a> · repo <code>codex-rs/tui/src/slash_command.rs</code> · <code>codex-rs/core/src/tools/handlers/multi_agents_spec.rs</code></div><div class="sc-tag" style="color:#1d4ed8">[공식 문서 + repo]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">16</span>OMC — 28 commands · 38 skills · 19~29 agents</div><div class="sc-loc"><a href="https://github.com/Yeachan-Heo/oh-my-claudecode" target="_blank" rel="noopener">github.com/Yeachan-Heo/oh-my-claudecode</a> (npm oh-my-claude-sisyphus) · <code>docs/REFERENCE.md</code></div><div class="sc-tag" style="color:#1d4ed8">[확장팩 repo]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">17</span>OMX — 44 skills · 37 agents</div><div class="sc-loc"><a href="https://github.com/Yeachan-Heo/oh-my-codex" target="_blank" rel="noopener">github.com/Yeachan-Heo/oh-my-codex</a> (npm oh-my-codex) · <code>src/agents/definitions.ts</code></div><div class="sc-tag" style="color:#1d4ed8">[확장팩 repo]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">18</span>검색 provider 14 · exa 키 없음</div><div class="sc-loc">omp 스킬 <code>~/.omp/agent/skills/omp-pitch/SKILL.md</code> · 웹검색 설정 <code>providers.webSearch</code></div><div class="sc-tag" style="color:#c2700a">[저자 스킬·직접 증명]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">19</span>CC microcompact · Codex trim · CC promotion 미구현 (S8 검증)</div><div class="sc-loc">claude-code 역공학 gist · <a href="https://github.com/openai/codex" target="_blank" rel="noopener">openai/codex</a> <code>codex-rs/core/src/compact_remote*.rs</code> · CC promotion <a href="https://github.com/anthropics/claude-code/issues/23920" target="_blank" rel="noopener">#23920</a></div><div class="sc-tag" style="color:#6b7280">[CC 내부=역공학 gist 기반]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">20</span>frontend-design 스킬 (번들 디자인)</div><div class="sc-loc"><a href="https://github.com/anthropics/claude-code" target="_blank" rel="noopener">github.com/anthropics/claude-code</a> <code>plugins/frontend-design/</code></div><div class="sc-tag" style="color:#1d4ed8">[공식 plugin 스킬]</div></div><div class="src-row"><div class="sc-claim"><span class="sc-n">21</span>OMX 제품 레인 (product-manager·ux-researcher·information-architect)</div><div class="sc-loc"><a href="https://github.com/Yeachan-Heo/oh-my-codex" target="_blank" rel="noopener">github.com/Yeachan-Heo/oh-my-codex</a> <code>src/agents/definitions.ts</code></div><div class="sc-tag" style="color:#1d4ed8">[확장팩 repo]</div></div></div>
     <div class="source-line"><span class="src-k">출처 종합</span> 위 항목들은 공개 URL·repo 경로·내장문서 기준. 클릭 시 원문으로 이동한다.</div>
   </div>
-<div class="s-footer"><span>omp 소개</span><span>28 / 28</span></div></section>
+<div class="s-footer"><span>omp 소개</span><span>26 / 26</span></div></section>
 
 <div class="nav-toast" id="nav-toast">방향키 · 마우스 휠 · 스와이프 — 한 장씩 넘기기 가능</div>
 
@@ -1543,8 +1496,8 @@ setTimeout(() => {
 
 <script>
 (function(){
-var titles = ["표지", "목차", "시작하기", "외부 설정 흡수 (참고)", "omp가 (기본) 안 가진 것", "하네스 & 토큰 오버헤드", "OMP는 무엇이 다른가", "상세① Hashline", "상세② 도구 하네스", "상세③ IDE·디버거", "상세④ 컨텍스트 관리", "상세⑤ 멀티프로바이더", "단축키 모음", "슬래시① 세션·브랜치", "슬래시② 컨텍스트·모델", "슬래시③ 계획·리뷰", "슬래시④ 멀티모델·메모리·플러그인", "슬래시⑤ 진단·설정", "에이전트① 빌드·구현·리뷰", "에이전트② 도메인·제품·조정", "추천 설정", "추천 설정① 사용량 한도 표시", "추천 설정② 검색 Provider", "추천 설정③ Advisor", "추천 설정④ Gemini API 키", "출처", "출처①", "출처②"];
-var menuEntries = [['cat','인트로'],0,1,['cat','본문 · 왜 omp인가'],2,3,4,5,6,7,8,9,10,11,12,['cat','비교 · 1:1'],['슬래시 명령어',13],['에이전트',18],['cat','추천 설정'],['추천 설정',20],['cat','출처'],['출처',25]];
+var titles = ["표지", "목차", "시작하기", "하네스 & 토큰 오버헤드", "OMP는 무엇이 다른가", "상세① Hashline", "상세② 도구 하네스", "상세③ IDE·디버거", "상세④ 컨텍스트 관리", "상세⑤ 멀티프로바이더", "단축키 모음", "슬래시① 세션·브랜치", "슬래시② 컨텍스트·모델", "슬래시③ 계획·리뷰", "슬래시④ 멀티모델·메모리·플러그인", "슬래시⑤ 진단·설정", "에이전트① 빌드·구현·리뷰", "에이전트② 도메인·제품·조정", "추천 설정", "추천 설정① 사용량 한도 표시", "추천 설정② 검색 Provider", "추천 설정③ Advisor", "추천 설정④ Gemini API 키", "출처", "출처①", "출처②"];
+var menuEntries = [['cat','인트로'],0,1,['cat','본문 · 왜 omp인가'],2,3,4,5,6,7,8,9,10,['cat','비교 · 1:1'],['슬래시 명령어',11],['에이전트',16],['cat','추천 설정'],['추천 설정',18],['cat','출처'],['출처',23]];
 var menu=document.createElement('div'); menu.id='slide-menu';
 var tmr;
 function show(){ clearTimeout(tmr); menu.classList.add('open'); }
