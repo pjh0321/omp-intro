@@ -827,7 +827,7 @@ h3 {
 .badge.omp { background: var(--purple-pale); border-color: var(--purple-soft); color: var(--purple-deep); }
 .badge.omp strong { color: var(--purple-deep); }
 
-/* Dark-slide card / emphasis adaptation (S3, S10) */
+/* Dark-slide card / emphasis adaptation (S3) */
 .slide.dark .card { background: rgba(255,255,255,0.045); border-color: rgba(255,255,255,0.12); }
 .slide.dark .card .card-num { color: var(--purple-soft); }
 .slide.dark .card .card-title { color: #fff; }
@@ -965,7 +965,7 @@ h3 {
 .cmp col.col-omp4 { width:33%; }
 .cmp col.col-ccx4 { width:48%; }
 
-/* slash per-capability table (S10-S13) */
+/* slash per-capability table (slash slides) */
 .cmp col.col-rh4s { width:21%; }
 .cmp col.col-omps { width:20%; }
 .cmp col.col-d3s { width:29.5%; }
@@ -980,7 +980,7 @@ h3 {
 .cmp.keys td.k-key { font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--purple-deep); font-size:12px; }
 .cmp.keys td.k-id { font-family:'JetBrains Mono',monospace; color:var(--ink-mute); font-size:10.5px; }
 
-/* ===== v5 additions — 23-slide (bigger nav, S4 A/B, honest S8, S10 gaps, provider table) ===== */
+/* ===== v5 additions (bigger nav, S4 A/B, honest S8, provider table) ===== */
 
 /* bigger 3-line nav: current clearly larger than neighbors */
 .navind { line-height:1.3; max-width:400px; gap:1px; }
@@ -1067,8 +1067,8 @@ section.sl-leaving > *:not(.s-header):not(.s-footer) { transition: opacity .15s 
       </div>
     </div>
     <div class="emphasis" style="margin-top:16px;">기존 워크플로를 <strong>버리지 않고 그대로 흡수</strong> → 시도 비용이 거의 0이고 되돌리기 쉽다.</div>
-    <div class="body-text" style="margin-top:10px; font-size:13.5px; opacity:0.85;">· 흡수가 부담이면(시스템 프롬프트·슬래시 메뉴 비대) omp 안에서 <strong>끌 수 있다</strong> — 필요한 스킬만 <code>~/.omp/agent/skills/</code>에 직접 둔다.<br>· 클라우드·원격·예약·호스티드 통합은 <strong>로컬 전용 구조</strong>라 omp엔 없다(구조적 한계).</div>
-    <div class="source-line"><span class="src-k">출처</span> omp.sh/install(README) · omp 스킬 omp-pitch §5 · 내장문서 config-usage·skills(우선순위 native 100›claude 80›codex 70›gemini 60·흡수 토글) · 로컬 전용 한계=code.claude.com/commands·developers.openai.com/codex.</div>
+    <div class="body-text" style="margin-top:10px; font-size:13.5px; opacity:0.85;">· 흡수가 부담이면(시스템 프롬프트·슬래시 메뉴 비대) omp 안에서 <strong>흡수원별로 끌 수 있다</strong> — 필요한 스킬만 <code>~/.omp/agent/skills/</code>에 직접 둔다.<br>· omp는 <strong>로컬 실행</strong> 도구라 CC·Codex식 <strong>클라우드 작업·예약 실행·호스티드 통합</strong> 같은 기능은 없다.</div>
+    <div class="source-line"><span class="src-k">출처</span> omp.sh/install(README) · omp 스킬 omp-pitch §5 · 내장문서 config-usage·skills·slash-command-internals(우선순위 native 100›claude 80›codex 70›gemini 60·흡수 토글) · 한계=code.claude.com/commands·developers.openai.com/codex.</div>
   </div>
 <div class="s-footer"><span>omp 소개</span><span>3 / 26</span></div></section>
 
